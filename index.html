@@ -131,16 +131,26 @@ body {
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
+  cursor: auto;
 }
-@media (max-width: 768px) { body { cursor: auto; } }
+/* Hide the native cursor only after JS confirms the custom cursor is alive.
+   Fallback: if JS fails to load, the user still sees their normal mouse pointer. */
+body.cursor-active,
+body.cursor-active button,
+body.cursor-active a,
+body.cursor-active summary,
+body.cursor-active input,
+body.cursor-active select,
+body.cursor-active * { cursor: none; }
+@media (max-width: 768px), (pointer: coarse) {
+  body.cursor-active, body.cursor-active * { cursor: auto; }
+}
 
 .mono { font-family: 'IBM Plex Mono', monospace; }
 .script { font-family: 'Pacifico', cursive; font-weight: 400; }
 
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: none; border: none; background: none; color: inherit; }
-@media (max-width: 768px) { button { cursor: pointer; } }
+button { font-family: inherit; border: none; background: none; color: inherit; }
 
 /* ============================================
    GLOBAL EFFECTS
@@ -2841,6 +2851,9 @@ function initCursor() {
   if (window.matchMedia('(max-width: 768px), (pointer: coarse)').matches) return;
   const cursor = document.getElementById('cursor');
   if (!cursor) return;
+
+  // Only NOW activate the cursor-none mode — fallback to native cursor if this never runs
+  document.body.classList.add('cursor-active');
 
   let mx = 0, my = 0, cx = 0, cy = 0;
   let firstMove = true;
