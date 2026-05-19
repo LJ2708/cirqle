@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build & deploy
+node_modules/
+.vercel/
+.next/
+dist/
+
+# Temp
+*.log
+*.tmp
