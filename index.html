@@ -9,8 +9,7 @@
 <meta name="description" content="cirqle ist der Run Club aus Hannover. Jeden Sonntag 10:00 ab CODOS, 8,3 km um den Maschsee. Alle Paces willkommen. Kostenlos. Community first.">
 <meta name="keywords" content="Run Club Hannover, Laufen Hannover, Maschsee Lauf, Sunday Run, cirqle, lecirqle, Joggen Hannover, Laufgruppe Hannover">
 <meta name="author" content="cirqle Hannover">
-<meta name="theme-color" content="#04040a" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#fafaf7">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://lecirqle.de/">
 
@@ -60,10 +59,10 @@
 <script>
 (function() {
   try {
-    const saved = localStorage.getItem('cirqle-theme') || 'dark';
+    const saved = localStorage.getItem('cirqle-theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
   } catch(e) {
-    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'light');
   }
 
   // Attach the theme toggle handler as soon as the DOM is ready —
@@ -947,6 +946,10 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+.event-grid.single {
+  grid-template-columns: minmax(0, 520px);
+  justify-content: center;
 }
 @media (max-width: 1024px) { .event-grid { grid-template-columns: 1fr; } }
 
@@ -2054,7 +2057,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <div class="hero-inner">
     <div class="hero-status">
       <span class="live"></span>
-      <span>Next run · So 24.05 · 10:00 · CODOS</span>
+      <span>Next run · So 07.06 · 10:00 · CODOS</span>
     </div>
     <h1 id="heroTitle">
       <svg class="hero-svg-logo" id="heroLogoSvg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="cirqle">
@@ -2154,21 +2157,21 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <div class="container">
     <div class="events-header">
       <div>
-        <div class="eyebrow">Was kommt · Nächste Runs</div>
-        <h2>Drei <span class="script">Events.</span><br>Drei Vouchers.</h2>
+        <div class="eyebrow">Was kommt · Nächster Run</div>
+        <h2>Sunday <span class="script">Run.</span><br>Save the date.</h2>
       </div>
       <div class="events-meta">→ Anmeldung sichert dir dein Goodie</div>
     </div>
 
-    <div class="event-grid">
+    <div class="event-grid single">
       <div class="event-card" data-tilt>
         <div class="ec-glow"></div>
         <div class="event-date-block">
           <div>
-            <div class="event-date">24</div>
-            <div class="event-day">So · Mai</div>
+            <div class="event-date">07</div>
+            <div class="event-day">So · Juni</div>
           </div>
-          <span class="event-tag">Featured</span>
+          <span class="event-tag">Next Run</span>
         </div>
         <h3>Sunday Run · CODOS</h3>
         <div class="event-info">
@@ -2186,65 +2189,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
           <div class="v-ico">☕</div>
           <div class="v-text">Gratis Filterkaffee bei CODOS für alle Angemeldeten</div>
         </div>
-        <button class="event-signup" data-hover onclick="openSignup('Sunday Run · CODOS', '24. Mai 2026', 'CODOS-KAFFEE', 'Gratis Filterkaffee bei CODOS')">
-          Anmelden <span>→</span>
-        </button>
-      </div>
-
-      <div class="event-card" data-tilt>
-        <div class="ec-glow"></div>
-        <div class="event-date-block">
-          <div>
-            <div class="event-date">31</div>
-            <div class="event-day">So · Mai</div>
-          </div>
-          <span class="event-tag">Pizza Run</span>
-        </div>
-        <h3>cirqle × Bestia</h3>
-        <div class="event-info">
-          <div class="row"><span class="key">Start</span> Bestia · Linden · 18:00</div>
-          <div class="row"><span class="key">Distanz</span> 5 km · Sundowner</div>
-          <div class="row"><span class="key">Pace</span>
-            <div class="paces">
-              <span class="pace-tag">All Paces</span>
-              <span class="pace-tag">Fun Run</span>
-            </div>
-          </div>
-        </div>
-        <div class="event-voucher">
-          <div class="v-ico">🍕</div>
-          <div class="v-text">1 Pizza for free bei Bestia (erste 30 Anmeldungen)</div>
-        </div>
-        <button class="event-signup" data-hover onclick="openSignup('cirqle × Bestia Pizza Run', '31. Mai 2026', 'BESTIA-PIZZA', 'Eine Pizza for free bei Bestia')">
-          Pizza sichern <span>→</span>
-        </button>
-      </div>
-
-      <div class="event-card" data-tilt>
-        <div class="ec-glow"></div>
-        <div class="event-date-block">
-          <div>
-            <div class="event-date">07</div>
-            <div class="event-day">So · Juni</div>
-          </div>
-          <span class="event-tag">Long Run</span>
-        </div>
-        <h3>Aspria Long Run</h3>
-        <div class="event-info">
-          <div class="row"><span class="key">Start</span> Aspria Hannover · 09:00</div>
-          <div class="row"><span class="key">Distanz</span> 10 km + Sauna</div>
-          <div class="row"><span class="key">Pace</span>
-            <div class="paces">
-              <span class="pace-tag">5:30</span>
-              <span class="pace-tag">4:45</span>
-            </div>
-          </div>
-        </div>
-        <div class="event-voucher">
-          <div class="v-ico">🧖</div>
-          <div class="v-text">50% auf den Aspria Day Pass — Sauna nach dem Run</div>
-        </div>
-        <button class="event-signup" data-hover onclick="openSignup('Aspria Long Run', '07. Juni 2026', 'ASPRIA-50', '50% Rabatt auf Aspria Day Pass')">
+        <button class="event-signup" data-hover onclick="openSignup('Sunday Run · CODOS', '07. Juni 2026', 'CODOS-KAFFEE', 'Gratis Filterkaffee bei CODOS')">
           Anmelden <span>→</span>
         </button>
       </div>
