@@ -1196,129 +1196,318 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 }
 
 /* ============================================
-   3D ROUTE SECTION
+   ROUTE SECTION — 2D SVG MAP (Strava-style)
 ============================================ */
-.route-3d {
-  height: 240vh;
+.route-section {
+  padding: 120px 32px;
   position: relative;
 }
-.route-pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
 }
-#routeCanvas {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+@media (max-width: 900px) {
+  .route-grid { grid-template-columns: 1fr; gap: 48px; }
+  .route-section { padding: 80px 20px; }
 }
-.route-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 80px 48px;
-}
-@media (max-width: 768px) { .route-overlay { padding: 80px 20px 40px; } }
-.route-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.route-top .route-title {
-  font-size: clamp(28px, 4vw, 56px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+.route-info h2 {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
   line-height: 1;
-  max-width: 600px;
+  margin-bottom: 16px;
 }
-.route-top .route-title .script {
+.route-info h2 .script {
   color: var(--pink);
   font-weight: 400;
-  font-size: 1.2em;
+  font-size: 1.05em;
   text-shadow: 0 0 40px var(--glow-soft);
 }
-.route-top .route-stats {
-  display: flex; gap: 32px;
+.route-info .lead {
+  color: var(--text-mute);
+  font-size: 17px;
+  max-width: 420px;
+  margin-bottom: 32px;
+  line-height: 1.6;
 }
-.route-top .rs {
-  font-family: 'IBM Plex Mono', monospace;
+.route-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 420px;
+  margin-bottom: 32px;
 }
-.route-top .rs .rs-num {
-  font-size: 28px;
-  font-weight: 500;
+.route-stat {
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+[data-theme="light"] .route-stat {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.06);
+}
+.route-stat .rs-num {
+  font-family: 'Pacifico', cursive;
+  font-size: 36px;
   color: var(--pink);
-  text-shadow: 0 0 20px var(--glow-soft);
+  line-height: 1;
+  text-shadow: 0 0 30px var(--glow-soft);
 }
-.route-top .rs .rs-lbl {
+.route-stat .rs-lbl {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text-mute);
-  margin-top: 4px;
+  margin-top: 8px;
+}
+.route-waypoint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-mute);
+}
+.route-waypoint-list .wp {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  transition: color .3s, opacity .3s;
+  opacity: 0.5;
+}
+.route-waypoint-list .wp.active { opacity: 1; color: var(--text); }
+.route-waypoint-list .wp .wp-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,62,165,0.3);
+  transition: all .3s;
+  flex-shrink: 0;
+}
+.route-waypoint-list .wp.active .wp-dot {
+  background: var(--pink);
+  box-shadow: 0 0 12px var(--pink);
+  transform: scale(1.4);
+}
+.route-waypoint-list .wp .wp-km {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-left: auto;
 }
 
-.route-bottom {
+/* The SVG map card */
+.route-map-card {
+  position: relative;
+  background: linear-gradient(160deg, #0a0a14 0%, #1a0d20 100%);
+  border: 1px solid rgba(255,62,165,0.15);
+  border-radius: 32px;
+  padding: 40px 28px 32px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+[data-theme="light"] .route-map-card {
+  /* keep dark even in light mode — cinematic island */
+  background: linear-gradient(160deg, #0a0a14 0%, #1a0d20 100%);
+  border-color: rgba(255,62,165,0.25);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+}
+.route-map-card::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,62,165,0.18), transparent 70%);
+  pointer-events: none;
+}
+.route-map-card::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(97,51,255,0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.route-map-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
 }
-.route-progress {
-  flex: 1;
-  max-width: 480px;
+.route-map-header .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: 'IBM Plex Mono', monospace;
-}
-.route-progress .rp-label {
-  display: flex;
-  justify-content: space-between;
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-mute);
+  color: rgba(255,255,255,0.7);
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+}
+.route-map-header .badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 8px var(--pink);
+  animation: pulse 2s infinite;
+}
+.route-map-header .distance {
+  font-family: 'Pacifico', cursive;
+  font-size: 28px;
+  color: white;
+  filter: drop-shadow(0 0 12px rgba(255,62,165,0.4));
+}
+.route-map-header .distance .unit { font-size: 14px; opacity: 0.6; margin-left: 4px; }
+
+.route-svg-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0 auto;
+}
+.route-svg {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(255,62,165,0.2));
+}
+/* Background dot grid inside the SVG card */
+.route-svg-bg {
+  fill: rgba(255,255,255,0.04);
+}
+/* Maschsee water silhouette */
+.route-water {
+  fill: rgba(80,140,200,0.15);
+  stroke: rgba(80,140,200,0.3);
+  stroke-width: 1;
+}
+.route-water-label {
+  fill: rgba(255,255,255,0.25);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+/* The actual route line — layered for glow */
+.route-line-glow {
+  fill: none;
+  stroke: var(--pink);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.15;
+  filter: blur(4px);
+}
+.route-line-mid {
+  fill: none;
+  stroke: var(--pink);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.3;
+}
+.route-line {
+  fill: none;
+  stroke: url(#routeGrad);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.route-line-progress {
+  fill: none;
+  stroke: white;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px white) drop-shadow(0 0 12px var(--pink));
+}
+/* Start / end marker */
+.route-marker-start-glow {
+  fill: var(--pink);
+  opacity: 0.3;
+}
+.route-marker-start {
+  fill: var(--pink);
+  stroke: white;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px var(--pink));
+}
+.route-marker-label {
+  fill: white;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+.route-marker-label-bg {
+  fill: rgba(0,0,0,0.7);
+  stroke: rgba(255,62,165,0.4);
+  stroke-width: 1;
+  rx: 6;
+}
+/* Waypoint circles */
+.route-wp-dot {
+  fill: rgba(255,255,255,0.85);
+  stroke: var(--pink);
+  stroke-width: 2;
+}
+/* Runner */
+.route-runner-glow {
+  fill: var(--pink);
+  opacity: 0.5;
+  filter: blur(4px);
+}
+.route-runner {
+  fill: white;
+  stroke: var(--pink);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 8px var(--pink));
+}
+
+/* Bottom progress bar inside the card */
+.route-map-progress {
+  margin-top: 20px;
+  position: relative;
+  z-index: 1;
+}
+.route-map-progress .rmp-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
   margin-bottom: 8px;
 }
-.rp-bar {
-  height: 2px;
-  background: rgba(255,255,255,0.1);
+.route-map-progress .rmp-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
   overflow: hidden;
-  border-radius: 2px;
 }
-.rp-fill {
+.route-map-progress .rmp-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--pink), var(--pink-soft));
+  background: linear-gradient(90deg, var(--pink), #ff77c2);
   width: 0%;
-  box-shadow: 0 0 12px var(--pink);
-  transition: width 0.1s;
-}
-.route-waypoint {
-  background: rgba(10,10,20,0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-  padding: 16px 20px;
-  font-family: 'IBM Plex Mono', monospace;
-  min-width: 200px;
-}
-.route-waypoint .wp-lbl {
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-bottom: 6px;
-}
-.route-waypoint .wp-val {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--text);
+  border-radius: 999px;
+  box-shadow: 0 0 10px var(--pink);
+  transition: width 0.1s linear;
 }
 
 /* ============================================
@@ -2463,33 +2652,102 @@ body, nav, .event-card, .glass-card, .modal, footer,
   </div>
 </section>
 
-<!-- 3D ROUTE -->
-<section class="route-3d" id="route">
-  <div class="route-pin">
-    <canvas id="routeCanvas"></canvas>
-    <div class="route-overlay">
-      <div class="route-top">
-        <div class="route-title">
-          Vom CODOS<br>um den <span class="script">Maschsee.</span>
+<!-- ROUTE — 2D SVG Map -->
+<section class="route-section" id="route">
+  <div class="route-grid">
+    <!-- Left: info -->
+    <div class="route-info">
+      <div class="eyebrow">Die Strecke</div>
+      <h2>Vom CODOS<br>um den <span class="script">Maschsee.</span></h2>
+      <p class="lead">8,3 km Loop ab CODOS Hannover — runter zum Maschsee, einmal rum, zurück über Südstadt. Flach, easy, mit Wasserblick.</p>
+
+      <div class="route-stats-grid">
+        <div class="route-stat">
+          <div class="rs-num">8,3</div>
+          <div class="rs-lbl">Kilometer</div>
         </div>
-        <div class="route-stats">
-          <div class="rs"><div class="rs-num">8.3</div><div class="rs-lbl">Kilometer</div></div>
-          <div class="rs"><div class="rs-num" id="elevation">~12</div><div class="rs-lbl">Höhenmeter</div></div>
-          <div class="rs"><div class="rs-num">100%</div><div class="rs-lbl">Asphalt</div></div>
+        <div class="route-stat">
+          <div class="rs-num">~12</div>
+          <div class="rs-lbl">Höhenmeter</div>
+        </div>
+        <div class="route-stat">
+          <div class="rs-num">100%</div>
+          <div class="rs-lbl">Asphalt</div>
+        </div>
+        <div class="route-stat">
+          <div class="rs-num">10:00</div>
+          <div class="rs-lbl">Start Sonntag</div>
         </div>
       </div>
-      <div class="route-bottom">
-        <div class="route-progress">
-          <div class="rp-label">
-            <span id="rpStart">Start · CODOS</span>
-            <span id="rpEnd">Ziel · CODOS</span>
-          </div>
-          <div class="rp-bar"><div class="rp-fill" id="rpFill"></div></div>
+
+      <div class="route-waypoint-list" id="wpList">
+        <div class="wp" data-t="0.00"><span class="wp-dot"></span><span class="wp-name">CODOS Start</span><span class="wp-km">0,0 km</span></div>
+        <div class="wp" data-t="0.20"><span class="wp-dot"></span><span class="wp-name">Leibnizufer</span><span class="wp-km">~1,7 km</span></div>
+        <div class="wp" data-t="0.40"><span class="wp-dot"></span><span class="wp-name">Maschsee Westufer</span><span class="wp-km">~3,3 km</span></div>
+        <div class="wp" data-t="0.55"><span class="wp-dot"></span><span class="wp-name">Maschsee Südspitze</span><span class="wp-km">~4,5 km</span></div>
+        <div class="wp" data-t="0.75"><span class="wp-dot"></span><span class="wp-name">Maschsee Ostufer</span><span class="wp-km">~6,2 km</span></div>
+        <div class="wp" data-t="0.95"><span class="wp-dot"></span><span class="wp-name">Bult / Südstadt</span><span class="wp-km">~7,9 km</span></div>
+        <div class="wp" data-t="1.00"><span class="wp-dot"></span><span class="wp-name">CODOS Ziel</span><span class="wp-km">8,3 km</span></div>
+      </div>
+    </div>
+
+    <!-- Right: SVG map card -->
+    <div class="route-map-card">
+      <div class="route-map-header">
+        <div class="badge">Live Route · GPX</div>
+        <div class="distance">8,3<span class="unit">km</span></div>
+      </div>
+
+      <div class="route-svg-wrap">
+        <svg class="route-svg" id="routeSvg" viewBox="0 0 500 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="routeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffd9ec"/>
+              <stop offset="50%" stop-color="#ff3ea5"/>
+              <stop offset="100%" stop-color="#d4248a"/>
+            </linearGradient>
+            <pattern id="dotgrid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.08)"/>
+            </pattern>
+          </defs>
+
+          <!-- Background dot grid -->
+          <rect width="500" height="900" fill="url(#dotgrid)"/>
+
+          <!-- Maschsee silhouette (stylized) -->
+          <ellipse id="maschsee" cx="370" cy="610" rx="80" ry="230" class="route-water" transform="rotate(-8 370 610)"/>
+          <text x="370" y="610" text-anchor="middle" class="route-water-label">Maschsee</text>
+
+          <!-- Glow layer (drawn underneath) -->
+          <path id="routeLineGlow" class="route-line-glow" d=""/>
+          <path id="routeLineMid" class="route-line-mid" d=""/>
+          <!-- Main route line -->
+          <path id="routeLine" class="route-line" d=""/>
+          <!-- Progress overlay (scroll-driven) -->
+          <path id="routeLineProgress" class="route-line-progress" d=""/>
+
+          <!-- Waypoint dots will be inserted here by JS -->
+          <g id="waypointDots"></g>
+
+          <!-- Start/End marker at CODOS -->
+          <circle id="routeMarkerStartGlow" class="route-marker-start-glow" cx="66" cy="40" r="18"/>
+          <circle id="routeMarkerStart" class="route-marker-start" cx="66" cy="40" r="9"/>
+          <rect class="route-marker-label-bg" x="84" y="28" width="80" height="24" rx="6"/>
+          <text x="124" y="44" text-anchor="middle" class="route-marker-label">START · ZIEL</text>
+
+          <!-- Runner -->
+          <circle id="routeRunnerGlow" class="route-runner-glow" cx="66" cy="40" r="14"/>
+          <circle id="routeRunner" class="route-runner" cx="66" cy="40" r="7"/>
+        </svg>
+      </div>
+
+      <div class="route-map-progress">
+        <div class="rmp-meta">
+          <span>Start · CODOS</span>
+          <span id="rmpCurrent">→ CODOS Start</span>
+          <span>Ziel · CODOS</span>
         </div>
-        <div class="route-waypoint">
-          <div class="wp-lbl">Current Waypoint</div>
-          <div class="wp-val" id="wpVal">→ Leibnizufer</div>
-        </div>
+        <div class="rmp-bar"><div class="rmp-fill" id="rmpFill"></div></div>
       </div>
     </div>
   </div>
@@ -3031,7 +3289,8 @@ function initSite() {
 
   // Init 3D scenes
   initHero3D();
-  initRoute3D();
+  // initRoute3D() replaced by initRoute2D
+  initRoute2D();
 
   // Init cursor
   initCursor();
@@ -3174,7 +3433,174 @@ function initHero3D() {
 }
 
 /* ============================================
-   ROUTE 3D — STRAVA-STYLE
+   ROUTE 2D SVG — Strava-style map (reliable)
+============================================ */
+function initRoute2D() {
+  const svg = document.getElementById('routeSvg');
+  const lineEl = document.getElementById('routeLine');
+  const lineGlowEl = document.getElementById('routeLineGlow');
+  const lineMidEl = document.getElementById('routeLineMid');
+  const progressEl = document.getElementById('routeLineProgress');
+  const runner = document.getElementById('routeRunner');
+  const runnerGlow = document.getElementById('routeRunnerGlow');
+  const markerStart = document.getElementById('routeMarkerStart');
+  const markerStartGlow = document.getElementById('routeMarkerStartGlow');
+  const wpDotsGroup = document.getElementById('waypointDots');
+  const rmpFill = document.getElementById('rmpFill');
+  const rmpCurrent = document.getElementById('rmpCurrent');
+  const wpListItems = document.querySelectorAll('#wpList .wp');
+
+  if (!svg || !lineEl) return;
+
+  // The actual GPS route
+  const rawRoute = [
+    [52.3700, 9.7345], [52.3685, 9.7340], [52.3670, 9.7335], [52.3650, 9.7335],
+    [52.3625, 9.7340], [52.3605, 9.7350], [52.3590, 9.7380], [52.3580, 9.7400],
+    [52.3560, 9.7400], [52.3540, 9.7395], [52.3520, 9.7395], [52.3500, 9.7395],
+    [52.3480, 9.7405], [52.3465, 9.7425], [52.3455, 9.7450], [52.3458, 9.7475],
+    [52.3470, 9.7490], [52.3490, 9.7495], [52.3510, 9.7495], [52.3530, 9.7490],
+    [52.3550, 9.7485], [52.3570, 9.7475], [52.3585, 9.7460], [52.3600, 9.7445],
+    [52.3620, 9.7430], [52.3640, 9.7410], [52.3660, 9.7390], [52.3680, 9.7365],
+    [52.3695, 9.7350], [52.3700, 9.7345]
+  ];
+
+  // SVG viewBox is 500x900
+  const W = 500, H = 900, PAD_X = 60, PAD_Y_TOP = 70, PAD_Y_BOTTOM = 70;
+  const lats = rawRoute.map(r => r[0]);
+  const lngs = rawRoute.map(r => r[1]);
+  const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+
+  function project([lat, lng]) {
+    const x = PAD_X + (lng - minLng) / (maxLng - minLng) * (W - 2 * PAD_X);
+    const y = PAD_Y_TOP + (maxLat - lat) / (maxLat - minLat) * (H - PAD_Y_TOP - PAD_Y_BOTTOM);
+    return { x, y };
+  }
+
+  const points = rawRoute.map(project);
+
+  // Build smooth Catmull-Rom-like path via quadratic Bezier midpoints
+  function buildSmoothPath(pts) {
+    if (pts.length < 2) return '';
+    let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+    for (let i = 1; i < pts.length - 1; i++) {
+      const mx = (pts[i].x + pts[i + 1].x) / 2;
+      const my = (pts[i].y + pts[i + 1].y) / 2;
+      d += ` Q ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)}, ${mx.toFixed(1)} ${my.toFixed(1)}`;
+    }
+    const last = pts[pts.length - 1];
+    d += ` L ${last.x.toFixed(1)} ${last.y.toFixed(1)}`;
+    return d;
+  }
+
+  const pathData = buildSmoothPath(points);
+  lineEl.setAttribute('d', pathData);
+  lineGlowEl.setAttribute('d', pathData);
+  lineMidEl.setAttribute('d', pathData);
+  progressEl.setAttribute('d', pathData);
+
+  // Move the start marker to the projected starting position
+  const startPt = points[0];
+  markerStart.setAttribute('cx', startPt.x);
+  markerStart.setAttribute('cy', startPt.y);
+  markerStartGlow.setAttribute('cx', startPt.x);
+  markerStartGlow.setAttribute('cy', startPt.y);
+
+  // Move the start label background + text to be just right of the start marker
+  const labelBg = svg.querySelector('.route-marker-label-bg');
+  const labelText = svg.querySelector('.route-marker-label');
+  if (labelBg) {
+    labelBg.setAttribute('x', startPt.x + 18);
+    labelBg.setAttribute('y', startPt.y - 12);
+  }
+  if (labelText) {
+    labelText.setAttribute('x', startPt.x + 58);
+    labelText.setAttribute('y', startPt.y + 4);
+  }
+
+  // Add waypoint dots along the route at specific t values
+  const waypoints = [
+    { t: 0.20, label: '→ Leibnizufer' },
+    { t: 0.40, label: '→ Maschsee Westufer' },
+    { t: 0.55, label: '→ Maschsee Südspitze' },
+    { t: 0.75, label: '→ Maschsee Ostufer' },
+    { t: 0.95, label: '→ Bult / Südstadt' },
+  ];
+
+  // Compute total path length
+  const totalLength = lineEl.getTotalLength();
+
+  waypoints.forEach((wp) => {
+    const pt = lineEl.getPointAtLength(totalLength * wp.t);
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', pt.x);
+    dot.setAttribute('cy', pt.y);
+    dot.setAttribute('r', 5);
+    dot.setAttribute('class', 'route-wp-dot');
+    wpDotsGroup.appendChild(dot);
+  });
+
+  // Set up the route-line-progress to be drawn only up to a certain length
+  progressEl.style.strokeDasharray = totalLength;
+  progressEl.style.strokeDashoffset = totalLength;
+
+  // Initial state: runner at start
+  function setProgress(p) {
+    p = Math.max(0, Math.min(1, p));
+    const lenSoFar = totalLength * p;
+    progressEl.style.strokeDashoffset = totalLength - lenSoFar;
+
+    // Position runner
+    const pt = lineEl.getPointAtLength(lenSoFar);
+    runner.setAttribute('cx', pt.x);
+    runner.setAttribute('cy', pt.y);
+    runnerGlow.setAttribute('cx', pt.x);
+    runnerGlow.setAttribute('cy', pt.y);
+
+    // Update bottom progress bar
+    if (rmpFill) rmpFill.style.width = (p * 100) + '%';
+
+    // Update current waypoint label and list highlight
+    const labels = [
+      { t: 0.0, label: '→ CODOS Start' },
+      ...waypoints,
+      { t: 1.0, label: '→ CODOS Ziel' }
+    ];
+    const wp = [...labels].reverse().find(w => p >= w.t) || labels[0];
+    if (rmpCurrent) rmpCurrent.textContent = wp.label;
+
+    // Highlight matching item in left-side wp list
+    wpListItems.forEach(item => {
+      const itemT = parseFloat(item.dataset.t);
+      item.classList.toggle('active', p >= itemT - 0.05);
+    });
+  }
+
+  setProgress(0);
+
+  // Use ScrollTrigger to drive progress as user scrolls through the section
+  ScrollTrigger.create({
+    trigger: '#route',
+    start: 'top 70%',
+    end: 'bottom 30%',
+    scrub: 0.6,
+    onUpdate: self => setProgress(self.progress)
+  });
+
+  // Make the start glow pulse subtly (CSS animation could also do this, JS is fine)
+  let pulseStart = performance.now();
+  function pulse() {
+    requestAnimationFrame(pulse);
+    const t = (performance.now() - pulseStart) / 1000;
+    const scale = 1 + Math.sin(t * 2) * 0.2;
+    markerStartGlow.setAttribute('r', 18 * scale);
+    runnerGlow.setAttribute('r', 14 * (1 + Math.sin(t * 3) * 0.15));
+  }
+  pulse();
+}
+
+/* ============================================
+   ROUTE 3D (legacy, no longer called)
 ============================================ */
 function initRoute3D() {
   const canvas = document.getElementById('routeCanvas');
