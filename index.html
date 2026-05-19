@@ -3002,7 +3002,6 @@ function initHero3D() {
 
   function animate() {
     requestAnimationFrame(animate);
-    if (!isHeroVisible()) return;
     particles.rotation.y += 0.0008;
     particles.rotation.x += 0.0003;
     camera.position.x += (mx * 8 - camera.position.x) * 0.04;
@@ -3257,7 +3256,8 @@ function initRoute3D() {
 
   function animate() {
     requestAnimationFrame(animate);
-    if (!isCanvasVisible()) return;
+    // Always render — visibility check was causing the canvas to stay blank in some cases.
+    // The perf cost of always rendering is minimal because the scene is small.
 
     // Phase 1 (0 → 0.15): top-down overview
     // Phase 2 (0.15 → 0.85): camera follows along the route
