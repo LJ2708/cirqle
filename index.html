@@ -2273,24 +2273,8 @@ footer {
   border-color: rgba(255,255,255,0.15);
 }
 
-/* Vibes / Glass cards */
-[data-theme="light"] .glass-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
-  border-color: rgba(0,0,0,0.06);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-}
-[data-theme="light"] .glass-card .glass-sub { color: var(--text-mute); }
-[data-theme="light"] .ig-stats .istat { color: var(--text-mute); }
-[data-theme="light"] .ig-stats .istat strong { color: var(--text); }
-[data-theme="light"] .ig-tile {
-  background: linear-gradient(135deg, rgba(255,62,165,0.12), rgba(97,51,255,0.08));
-  border-color: rgba(0,0,0,0.06);
-}
-[data-theme="light"] .ig-follow {
-  background: rgba(0,0,0,0.04);
-  border-color: rgba(0,0,0,0.1);
-  color: var(--text);
-}
+/* Vibes / Glass cards — bleiben dunkel, der "Premium-Card-Inseln"-Look */
+/* (Light-Mode overrides für glass-card sind weiter unten beim Card-Design) */
 
 /* FAQ */
 [data-theme="light"] .faq-item { border-color: rgba(0,0,0,0.08); }
@@ -2429,14 +2413,179 @@ body, nav, .event-card, .glass-card, .modal, footer,
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 
-/* Mobile tweaks */
+/* ============================================
+   MOBILE — Comprehensive responsive optimization
+============================================ */
 @media (max-width: 768px) {
-  section { padding: 100px 20px; }
-  .events-section { padding-top: 80px; }
-  .vibes, .faq-section { padding: 100px 20px; }
-  .glass-card { padding: 28px; }
-  .modal { padding: 28px; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  section { padding: 80px 20px; }
+
+  /* NAV — kompakter, brand + Anmelden visible, Menü kollabiert */
+  nav {
+    top: 12px;
+    padding: 10px 8px 10px 18px;
+    gap: 10px;
+    width: calc(100% - 24px);
+    max-width: 380px;
+    justify-content: space-between;
+  }
+  nav .brand { font-size: 18px; }
+  nav ul { display: none; }
+  nav .cta {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  /* HERO */
+  .hero { padding: 90px 18px 50px; min-height: auto; }
+  .hero-status {
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    margin-bottom: 18px;
+  }
+  .hero-svg-logo { width: 80vw; max-width: 320px; }
+  .hero-tagline { font-size: 18px; margin-bottom: 12px; }
+  .hero-sub { font-size: 14px; margin-bottom: 28px; }
+  .hero-ctas { gap: 10px; margin-bottom: 32px; flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  .hero-stats { gap: 28px; }
+  .stat-item .stat-num { font-size: 36px; }
+  .scroll-hint { display: none; }
+
+  /* MARQUEE — slower animation, smaller photos */
+  .marquee { padding: 24px 0 32px; }
+  .marquee-meta { font-size: 9px; padding: 0 18px 16px; }
+  .marquee-track { animation-duration: 45s; gap: 12px; }
+  .m-photo { width: 200px; height: 260px; }
+  .m-photo .ph-tag { font-size: 9px; padding: 4px 8px; }
+
+  /* MANIFESTO — kleiner, faster scroll */
+  .manifesto { height: 100vh; }
+  .manifesto-text { font-size: 28px; line-height: 1.2; padding: 0 12px; }
+  .manifesto-orb { width: 320px; height: 320px; }
+
+  /* EVENTS */
+  .events-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
+  .events-header h2 { font-size: 32px; }
+  .events-meta { font-size: 11px; }
+  .event-grid.single { grid-template-columns: 1fr; }
+  .event-card { padding: 24px; }
+  .event-date { font-size: 48px; }
+  .event-card h3 { font-size: 20px; }
+  .event-info { font-size: 12px; }
+  .event-info .key { width: 64px; font-size: 9px; }
+  .event-voucher { padding: 12px; gap: 10px; }
+  .event-voucher .v-text { font-size: 12px; }
+  .event-capacity { padding: 12px 14px; }
+  .cap-header { font-size: 10px; gap: 8px; flex-wrap: wrap; }
+  .cap-count strong { font-size: 14px; }
+  .event-signup { padding: 12px; font-size: 13px; }
+
+  /* GALLERY */
+  .gallery-header { flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .gallery-header h2 { font-size: 32px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; gap: 8px; }
+  .g-1, .g-3, .g-6, .g-11 { grid-column: span 2; grid-row: span 2; }
+  .g-2, .g-4, .g-5, .g-7, .g-8, .g-9, .g-10, .g-12 { grid-column: span 1; grid-row: span 1; }
+  .g-item .caption { padding: 12px; font-size: 12px; }
+
+  /* ROUTE */
+  .route-section { padding: 60px 18px; }
+  .route-grid { grid-template-columns: 1fr; gap: 32px; }
+  .route-info h2 { font-size: 36px; }
+  .route-info .lead { font-size: 14px; margin-bottom: 24px; }
+  .route-stats-grid { gap: 8px; max-width: 100%; }
+  .route-stat { padding: 14px 16px; }
+  .route-stat .rs-num { font-size: 28px; }
+  .route-stat .rs-lbl { font-size: 9px; }
+  .route-waypoint-list { font-size: 11px; }
+  .route-waypoint-list .wp .wp-km { font-size: 9px; }
+  .leaflet-map { height: 360px; border-radius: 16px; }
+  .route-map-card { padding: 24px 18px 20px; border-radius: 24px; }
+  .route-map-header .distance { font-size: 22px; }
+  .route-map-header .badge { font-size: 9px; letter-spacing: 1.5px; padding: 4px 10px; }
+  .route-map-progress .rmp-meta { font-size: 9px; flex-wrap: wrap; gap: 6px; }
+
+  /* VIBES (Spotify + Instagram cards) */
+  .vibes { padding: 60px 18px; }
+  .vibes-grid { grid-template-columns: 1fr; gap: 18px; }
+  .glass-card { padding: 24px 22px; border-radius: 22px; }
+  .glass-card h3 { font-size: 24px; }
+  .glass-card .glass-sub { font-size: 13px; margin-bottom: 20px; }
+  .media-badge { font-size: 9px; letter-spacing: 1.5px; padding: 5px 10px 5px 8px; margin-bottom: 18px; }
+  .spotify-frame iframe { height: 352px; }
+  .ig-handle { font-size: 36px; }
+  .ig-stats { gap: 16px; padding: 12px 14px; margin: 14px 0 18px; }
+  .ig-stats .istat strong { font-size: 18px; }
+  .ig-stats .istat { font-size: 9px; }
+  .ig-preview { gap: 4px; }
+  .ig-follow { padding: 13px 20px; font-size: 13px; }
+
+  /* FAQ */
+  .faq-section { padding: 60px 18px; }
+  .faq-wrap { grid-template-columns: 1fr; gap: 32px; }
+  .faq-side h2 { font-size: 32px; }
+  .faq-side p { font-size: 14px; }
+  .faq-item { padding: 20px 0; }
+  .faq-item summary { font-size: 16px; gap: 16px; }
+  .faq-item .plus { width: 28px; height: 28px; font-size: 16px; }
+  .faq-item p { font-size: 14px; }
+
+  /* About section */
+  #about { padding: 70px 18px !important; }
+  #about .inner { grid-template-columns: 1fr !important; gap: 28px !important; }
+  #about h2 { font-size: 36px !important; }
+  .about-grid .tile { padding: 18px; }
+  .about-grid .tile .emoji { font-size: 26px; }
+  .about-grid .tile .t { font-size: 15px; }
+
+  /* CTA */
+  .cta-final { padding: 80px 18px; }
+  .cta-final h2 { font-size: 56px; line-height: 1.1; }
+  .cta-final p { font-size: 15px; }
+
+  /* Footer */
+  footer { padding: 56px 20px 28px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-brand { grid-column: span 2; }
+  .footer-brand .brand { font-size: 32px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; margin-top: 40px; }
+
+  /* Modal */
+  .modal { padding: 24px 20px; border-radius: 18px; max-height: 92vh; }
+  .modal h3 { font-size: 22px; }
+  .modal-sub { font-size: 11px; margin-bottom: 20px; }
+  .modal input, .modal select { padding: 12px 14px; font-size: 14px; }
+
+  /* Theme toggle — kompakter */
+  .theme-toggle-float {
+    bottom: 14px;
+    right: 14px;
+    height: 40px;
+    padding: 0 12px 0 12px;
+  }
+  .theme-toggle-float .tt-label { font-size: 9px; padding-right: 4px; }
+  .theme-toggle-float svg { width: 16px; height: 16px; }
+  .theme-toggle-float::after { display: none; } /* no attention pulse on mobile, button is always visible enough */
+
+  /* Reduce visual cost on mobile */
+  .bg-orbs { opacity: 0.6; }
+  .noise { opacity: 0.025; }
+  .bg-grid { opacity: 0.4; }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+  .hero-svg-logo { width: 75vw; }
+  .events-header h2,
+  .gallery-header h2,
+  .route-info h2,
+  .faq-side h2 { font-size: 28px; }
+  .manifesto-text { font-size: 24px; }
+  .cta-final h2 { font-size: 44px; }
+  nav { max-width: calc(100% - 16px); }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-brand { grid-column: span 1; }
 }
 </style>
 </head>
