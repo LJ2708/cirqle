@@ -337,15 +337,18 @@ button { font-family: inherit; border: none; background: none; color: inherit; }
   position: relative;
   z-index: 2;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(10px, 1.2vw, 13px);
+  font-size: clamp(11px, 1.3vw, 14px);
   letter-spacing: 8px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.6);
   text-transform: uppercase;
+  font-weight: 500;
   opacity: 0;
   display: flex;
   gap: 14px;
   align-items: center;
 }
+[data-theme="light"] .loader-tag { color: rgba(0,0,0,0.65); }
+[data-theme="light"] .loader-tag .tag-dot { background: var(--pink); box-shadow: 0 0 8px var(--pink); }
 .loader-tag .tag-word {
   display: inline-block;
   opacity: 0;
