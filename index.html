@@ -109,6 +109,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
+<!-- Leaflet for real map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <style>
 /* ============================================
@@ -1385,6 +1388,67 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   display: block;
   filter: drop-shadow(0 0 20px rgba(255,62,165,0.2));
 }
+
+/* === Leaflet map container === */
+.leaflet-map {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 560px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0a0a14;
+  border: 1px solid rgba(255,62,165,0.15);
+}
+@media (max-width: 900px) { .leaflet-map { height: 460px; } }
+.leaflet-container { background: #0a0a14 !important; }
+/* Hide Leaflet attribution */
+.leaflet-control-attribution { display: none !important; }
+/* Pink route polyline */
+.leaflet-overlay-pane path.route-outer-glow { stroke: #ff3ea5; stroke-width: 18; opacity: 0.15; filter: blur(2px); }
+.leaflet-overlay-pane path.route-mid-glow { stroke: #ff3ea5; stroke-width: 10; opacity: 0.35; }
+.leaflet-overlay-pane path.route-main { stroke: #ff77c2; stroke-width: 4; filter: drop-shadow(0 0 8px #ff3ea5); }
+
+/* Custom map markers */
+.map-marker-start {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 3px solid white;
+  box-shadow: 0 0 0 4px rgba(255,62,165,0.2), 0 0 20px var(--pink);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 14px;
+  animation: pulse 2s infinite;
+}
+.map-marker-runner {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--pink);
+  box-shadow: 0 0 0 4px rgba(255,62,165,0.3), 0 0 20px var(--pink), 0 0 30px rgba(255,62,165,0.5);
+}
+.map-marker-wp {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: rgba(255,62,165,0.9);
+  border: 2px solid white;
+  box-shadow: 0 0 8px var(--pink);
+}
+.map-tooltip {
+  background: rgba(10,10,20,0.9);
+  border: 1px solid rgba(255,62,165,0.3);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+.leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before { display: none; }
+.leaflet-tooltip { background: transparent; border: none; box-shadow: none; padding: 0; }
 /* Background dot grid inside the SVG card */
 .route-svg-bg {
   fill: rgba(255,255,255,0.04);
@@ -2698,48 +2762,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <div class="distance">8,3<span class="unit">km</span></div>
       </div>
 
-      <div class="route-svg-wrap">
-        <svg class="route-svg" id="routeSvg" viewBox="0 0 500 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="routeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#ffd9ec"/>
-              <stop offset="50%" stop-color="#ff3ea5"/>
-              <stop offset="100%" stop-color="#d4248a"/>
-            </linearGradient>
-            <pattern id="dotgrid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-              <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.08)"/>
-            </pattern>
-          </defs>
-
-          <!-- Background dot grid -->
-          <rect width="500" height="900" fill="url(#dotgrid)"/>
-
-          <!-- Maschsee silhouette (stylized) -->
-          <ellipse id="maschsee" cx="370" cy="610" rx="80" ry="230" class="route-water" transform="rotate(-8 370 610)"/>
-          <text x="370" y="610" text-anchor="middle" class="route-water-label">Maschsee</text>
-
-          <!-- Glow layer (drawn underneath) -->
-          <path id="routeLineGlow" class="route-line-glow" d=""/>
-          <path id="routeLineMid" class="route-line-mid" d=""/>
-          <!-- Main route line -->
-          <path id="routeLine" class="route-line" d=""/>
-          <!-- Progress overlay (scroll-driven) -->
-          <path id="routeLineProgress" class="route-line-progress" d=""/>
-
-          <!-- Waypoint dots will be inserted here by JS -->
-          <g id="waypointDots"></g>
-
-          <!-- Start/End marker at CODOS -->
-          <circle id="routeMarkerStartGlow" class="route-marker-start-glow" cx="66" cy="40" r="18"/>
-          <circle id="routeMarkerStart" class="route-marker-start" cx="66" cy="40" r="9"/>
-          <rect class="route-marker-label-bg" x="84" y="28" width="80" height="24" rx="6"/>
-          <text x="124" y="44" text-anchor="middle" class="route-marker-label">START · ZIEL</text>
-
-          <!-- Runner -->
-          <circle id="routeRunnerGlow" class="route-runner-glow" cx="66" cy="40" r="14"/>
-          <circle id="routeRunner" class="route-runner" cx="66" cy="40" r="7"/>
-        </svg>
-      </div>
+      <div class="leaflet-map" id="leafletMap"></div>
 
       <div class="route-map-progress">
         <div class="rmp-meta">
@@ -3433,26 +3456,13 @@ function initHero3D() {
 }
 
 /* ============================================
-   ROUTE 2D SVG — Strava-style map (reliable)
+   ROUTE — Real Leaflet map (Hannover streets + Maschsee)
 ============================================ */
 function initRoute2D() {
-  const svg = document.getElementById('routeSvg');
-  const lineEl = document.getElementById('routeLine');
-  const lineGlowEl = document.getElementById('routeLineGlow');
-  const lineMidEl = document.getElementById('routeLineMid');
-  const progressEl = document.getElementById('routeLineProgress');
-  const runner = document.getElementById('routeRunner');
-  const runnerGlow = document.getElementById('routeRunnerGlow');
-  const markerStart = document.getElementById('routeMarkerStart');
-  const markerStartGlow = document.getElementById('routeMarkerStartGlow');
-  const wpDotsGroup = document.getElementById('waypointDots');
-  const rmpFill = document.getElementById('rmpFill');
-  const rmpCurrent = document.getElementById('rmpCurrent');
-  const wpListItems = document.querySelectorAll('#wpList .wp');
+  const mapEl = document.getElementById('leafletMap');
+  if (!mapEl || typeof L === 'undefined') return;
 
-  if (!svg || !lineEl) return;
-
-  // The actual GPS route
+  // Actual GPS route
   const rawRoute = [
     [52.3700, 9.7345], [52.3685, 9.7340], [52.3670, 9.7335], [52.3650, 9.7335],
     [52.3625, 9.7340], [52.3605, 9.7350], [52.3590, 9.7380], [52.3580, 9.7400],
@@ -3464,121 +3474,117 @@ function initRoute2D() {
     [52.3695, 9.7350], [52.3700, 9.7345]
   ];
 
-  // SVG viewBox is 500x900
-  const W = 500, H = 900, PAD_X = 60, PAD_Y_TOP = 70, PAD_Y_BOTTOM = 70;
-  const lats = rawRoute.map(r => r[0]);
-  const lngs = rawRoute.map(r => r[1]);
-  const minLat = Math.min(...lats), maxLat = Math.max(...lats);
-  const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+  const bounds = L.latLngBounds(rawRoute);
+  const map = L.map(mapEl, {
+    zoomControl: false,
+    attributionControl: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: true,
+    dragging: true,
+    zoomSnap: 0.25
+  });
+  map.fitBounds(bounds, { padding: [40, 40] });
 
-  function project([lat, lng]) {
-    const x = PAD_X + (lng - minLng) / (maxLng - minLng) * (W - 2 * PAD_X);
-    const y = PAD_Y_TOP + (maxLat - lat) / (maxLat - minLat) * (H - PAD_Y_TOP - PAD_Y_BOTTOM);
-    return { x, y };
-  }
+  // Dark themed tiles from CartoDB
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd'
+  }).addTo(map);
 
-  const points = rawRoute.map(project);
+  // Route polyline — 3 layers for glow effect
+  L.polyline(rawRoute, { color: '#ff3ea5', weight: 18, opacity: 0.15, lineCap: 'round', lineJoin: 'round', className: 'route-outer-glow' }).addTo(map);
+  L.polyline(rawRoute, { color: '#ff3ea5', weight: 10, opacity: 0.35, lineCap: 'round', lineJoin: 'round', className: 'route-mid-glow' }).addTo(map);
+  L.polyline(rawRoute, { color: '#ff77c2', weight: 4, opacity: 1, lineCap: 'round', lineJoin: 'round', className: 'route-main' }).addTo(map);
 
-  // Build smooth Catmull-Rom-like path via quadratic Bezier midpoints
-  function buildSmoothPath(pts) {
-    if (pts.length < 2) return '';
-    let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
-    for (let i = 1; i < pts.length - 1; i++) {
-      const mx = (pts[i].x + pts[i + 1].x) / 2;
-      const my = (pts[i].y + pts[i + 1].y) / 2;
-      d += ` Q ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)}, ${mx.toFixed(1)} ${my.toFixed(1)}`;
+  // Start/Finish marker
+  const startIcon = L.divIcon({
+    html: '<div class="map-marker-start">✦</div>',
+    iconSize: [32, 32], iconAnchor: [16, 16], className: ''
+  });
+  L.marker(rawRoute[0], { icon: startIcon, zIndexOffset: 1000 })
+    .addTo(map)
+    .bindTooltip('Start · Ziel · CODOS', { permanent: false, direction: 'right', offset: [16, 0], className: 'map-tooltip' });
+
+  // Waypoint markers (compute by walking through route)
+  // Compute cumulative distances for the route
+  function segmentDistances(coords) {
+    const dists = [0];
+    let total = 0;
+    for (let i = 0; i < coords.length - 1; i++) {
+      const dx = coords[i+1][1] - coords[i][1];
+      const dy = coords[i+1][0] - coords[i][0];
+      const d = Math.sqrt(dx*dx + dy*dy);
+      total += d;
+      dists.push(total);
     }
-    const last = pts[pts.length - 1];
-    d += ` L ${last.x.toFixed(1)} ${last.y.toFixed(1)}`;
-    return d;
+    return { dists, total };
+  }
+  const { dists, total } = segmentDistances(rawRoute);
+
+  function pointAtRatio(ratio) {
+    if (ratio <= 0) return rawRoute[0];
+    if (ratio >= 1) return rawRoute[rawRoute.length - 1];
+    const target = ratio * total;
+    for (let i = 0; i < dists.length - 1; i++) {
+      if (dists[i+1] >= target) {
+        const local = (target - dists[i]) / (dists[i+1] - dists[i]);
+        const lat = rawRoute[i][0] + (rawRoute[i+1][0] - rawRoute[i][0]) * local;
+        const lng = rawRoute[i][1] + (rawRoute[i+1][1] - rawRoute[i][1]) * local;
+        return [lat, lng];
+      }
+    }
+    return rawRoute[rawRoute.length - 1];
   }
 
-  const pathData = buildSmoothPath(points);
-  lineEl.setAttribute('d', pathData);
-  lineGlowEl.setAttribute('d', pathData);
-  lineMidEl.setAttribute('d', pathData);
-  progressEl.setAttribute('d', pathData);
-
-  // Move the start marker to the projected starting position
-  const startPt = points[0];
-  markerStart.setAttribute('cx', startPt.x);
-  markerStart.setAttribute('cy', startPt.y);
-  markerStartGlow.setAttribute('cx', startPt.x);
-  markerStartGlow.setAttribute('cy', startPt.y);
-
-  // Move the start label background + text to be just right of the start marker
-  const labelBg = svg.querySelector('.route-marker-label-bg');
-  const labelText = svg.querySelector('.route-marker-label');
-  if (labelBg) {
-    labelBg.setAttribute('x', startPt.x + 18);
-    labelBg.setAttribute('y', startPt.y - 12);
-  }
-  if (labelText) {
-    labelText.setAttribute('x', startPt.x + 58);
-    labelText.setAttribute('y', startPt.y + 4);
-  }
-
-  // Add waypoint dots along the route at specific t values
   const waypoints = [
-    { t: 0.20, label: '→ Leibnizufer' },
-    { t: 0.40, label: '→ Maschsee Westufer' },
-    { t: 0.55, label: '→ Maschsee Südspitze' },
-    { t: 0.75, label: '→ Maschsee Ostufer' },
-    { t: 0.95, label: '→ Bult / Südstadt' },
+    { t: 0.20, label: 'Leibnizufer' },
+    { t: 0.40, label: 'Maschsee Westufer' },
+    { t: 0.55, label: 'Maschsee Südspitze' },
+    { t: 0.75, label: 'Maschsee Ostufer' },
+    { t: 0.95, label: 'Bult / Südstadt' },
   ];
-
-  // Compute total path length
-  const totalLength = lineEl.getTotalLength();
-
-  waypoints.forEach((wp) => {
-    const pt = lineEl.getPointAtLength(totalLength * wp.t);
-    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    dot.setAttribute('cx', pt.x);
-    dot.setAttribute('cy', pt.y);
-    dot.setAttribute('r', 5);
-    dot.setAttribute('class', 'route-wp-dot');
-    wpDotsGroup.appendChild(dot);
+  waypoints.forEach(wp => {
+    const wpIcon = L.divIcon({ html: '<div class="map-marker-wp"></div>', iconSize: [12,12], iconAnchor: [6,6], className: '' });
+    L.marker(pointAtRatio(wp.t), { icon: wpIcon })
+      .addTo(map)
+      .bindTooltip(wp.label, { permanent: false, direction: 'top', offset: [0, -8], className: 'map-tooltip' });
   });
 
-  // Set up the route-line-progress to be drawn only up to a certain length
-  progressEl.style.strokeDasharray = totalLength;
-  progressEl.style.strokeDashoffset = totalLength;
+  // Runner marker (moves with scroll)
+  const runnerIcon = L.divIcon({
+    html: '<div class="map-marker-runner"></div>',
+    iconSize: [18, 18], iconAnchor: [9, 9], className: ''
+  });
+  const runner = L.marker(rawRoute[0], { icon: runnerIcon, zIndexOffset: 2000, interactive: false }).addTo(map);
 
-  // Initial state: runner at start
+  const rmpFill = document.getElementById('rmpFill');
+  const rmpCurrent = document.getElementById('rmpCurrent');
+  const wpListItems = document.querySelectorAll('#wpList .wp');
+
   function setProgress(p) {
     p = Math.max(0, Math.min(1, p));
-    const lenSoFar = totalLength * p;
-    progressEl.style.strokeDashoffset = totalLength - lenSoFar;
-
-    // Position runner
-    const pt = lineEl.getPointAtLength(lenSoFar);
-    runner.setAttribute('cx', pt.x);
-    runner.setAttribute('cy', pt.y);
-    runnerGlow.setAttribute('cx', pt.x);
-    runnerGlow.setAttribute('cy', pt.y);
-
-    // Update bottom progress bar
+    const pos = pointAtRatio(p);
+    runner.setLatLng(pos);
     if (rmpFill) rmpFill.style.width = (p * 100) + '%';
-
-    // Update current waypoint label and list highlight
     const labels = [
       { t: 0.0, label: '→ CODOS Start' },
-      ...waypoints,
+      { t: 0.20, label: '→ Leibnizufer' },
+      { t: 0.40, label: '→ Maschsee Westufer' },
+      { t: 0.55, label: '→ Maschsee Südspitze' },
+      { t: 0.75, label: '→ Maschsee Ostufer' },
+      { t: 0.95, label: '→ Bult / Südstadt' },
       { t: 1.0, label: '→ CODOS Ziel' }
     ];
     const wp = [...labels].reverse().find(w => p >= w.t) || labels[0];
     if (rmpCurrent) rmpCurrent.textContent = wp.label;
-
-    // Highlight matching item in left-side wp list
     wpListItems.forEach(item => {
       const itemT = parseFloat(item.dataset.t);
       item.classList.toggle('active', p >= itemT - 0.05);
     });
   }
-
   setProgress(0);
 
-  // Use ScrollTrigger to drive progress as user scrolls through the section
+  // Scroll-driven runner
   ScrollTrigger.create({
     trigger: '#route',
     start: 'top 70%',
@@ -3587,16 +3593,9 @@ function initRoute2D() {
     onUpdate: self => setProgress(self.progress)
   });
 
-  // Make the start glow pulse subtly (CSS animation could also do this, JS is fine)
-  let pulseStart = performance.now();
-  function pulse() {
-    requestAnimationFrame(pulse);
-    const t = (performance.now() - pulseStart) / 1000;
-    const scale = 1 + Math.sin(t * 2) * 0.2;
-    markerStartGlow.setAttribute('r', 18 * scale);
-    runnerGlow.setAttribute('r', 14 * (1 + Math.sin(t * 3) * 0.15));
-  }
-  pulse();
+  // Fix Leaflet sizing once layout is settled
+  setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [40, 40] }); }, 200);
+  setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [40, 40] }); }, 600);
 }
 
 /* ============================================
