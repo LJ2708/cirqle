@@ -593,6 +593,8 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   justify-content: center;
   gap: 64px;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 3;
 }
 .stat-item .stat-num {
   font-family: 'Pacifico', cursive;
@@ -1332,104 +1334,209 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 }
 @media (max-width: 900px) { .vibes-grid { grid-template-columns: 1fr; } }
 
+/* === Premium media cards (Spotify + Instagram) === */
 .glass-card {
   position: relative;
-  background: linear-gradient(135deg, rgba(20,20,30,0.7), rgba(20,20,30,0.5));
-  border: 1px solid var(--border-strong);
+  background: linear-gradient(155deg, #0e0e16 0%, #18101f 100%);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 28px;
-  padding: 40px;
+  padding: 36px;
   overflow: hidden;
+  color: #fff;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .glass-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(255,62,165,0.1), transparent 50%);
+  top: -60%; right: -30%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,62,165,0.18), transparent 60%);
   pointer-events: none;
 }
+.glass-card::after {
+  content: '';
+  position: absolute;
+  bottom: -50%; left: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(97,51,255,0.15), transparent 60%);
+  pointer-events: none;
+}
+.glass-card > * { position: relative; z-index: 1; }
+
+.media-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,62,165,0.12);
+  border: 1px solid rgba(255,62,165,0.25);
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #ffd9ec;
+  margin-bottom: 22px;
+}
+.media-badge .eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+.media-badge .eq span {
+  width: 2.5px;
+  background: var(--pink);
+  border-radius: 2px;
+  animation: equalizer 0.9s ease-in-out infinite;
+}
+.media-badge .eq span:nth-child(1) { height: 30%; animation-delay: 0s; }
+.media-badge .eq span:nth-child(2) { height: 90%; animation-delay: 0.2s; }
+.media-badge .eq span:nth-child(3) { height: 50%; animation-delay: 0.45s; }
+.media-badge .eq span:nth-child(4) { height: 75%; animation-delay: 0.15s; }
+@keyframes equalizer {
+  0%, 100% { transform: scaleY(0.4); transform-origin: bottom; }
+  50% { transform: scaleY(1); }
+}
+
 .glass-card h3 {
   font-size: 32px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  color: #fff;
 }
 .glass-card .glass-sub {
-  color: var(--text-mute);
+  color: rgba(255,255,255,0.62);
   font-size: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 26px;
+  max-width: 90%;
 }
 
 .spotify-frame {
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
 .spotify-frame iframe { width: 100%; height: 380px; border: 0; display: block; }
 
+/* Instagram card */
 .ig-card { display: flex; flex-direction: column; }
 .ig-handle {
   font-family: 'Pacifico', cursive;
-  color: var(--pink);
-  font-size: 36px;
-  margin-bottom: 8px;
-  text-shadow: 0 0 30px var(--glow-soft);
+  background: linear-gradient(135deg, #ffd9ec, #ff3ea5, #d4248a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 44px;
+  margin-bottom: 6px;
+  line-height: 1;
+  filter: drop-shadow(0 0 30px rgba(255,62,165,0.4));
 }
 .ig-stats {
-  display: flex; gap: 24px;
+  display: flex; gap: 28px;
   font-family: 'IBM Plex Mono', monospace;
-  margin-bottom: 24px;
+  margin: 18px 0 22px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
 }
 .ig-stats .istat {
-  font-size: 12px; color: var(--text-mute);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
 }
 .ig-stats .istat strong {
-  color: var(--text);
-  font-size: 20px;
+  color: #fff;
+  font-size: 22px;
   display: block;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
   margin-bottom: 2px;
 }
+
 .ig-preview {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 .ig-tile {
   aspect-ratio: 1;
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(255,62,165,0.2), rgba(97,51,255,0.15));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  border: 1px solid var(--border);
-  transition: all .3s;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,62,165,0.18), rgba(97,51,255,0.12));
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
   cursor: pointer;
 }
-.ig-tile:hover {
-  transform: scale(1.05);
-  border-color: var(--pink);
-  box-shadow: 0 0 20px var(--glow-soft);
+.ig-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
 }
+.ig-tile:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255,62,165,0.25);
+  z-index: 2;
+}
+.ig-tile:hover img { transform: scale(1.08); }
+.ig-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.5));
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.ig-tile:hover::after { opacity: 1; }
+/* Heart overlay on hover */
+.ig-tile .ig-ico {
+  position: absolute;
+  bottom: 8px; left: 8px;
+  font-size: 13px;
+  color: white;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all .3s;
+  z-index: 2;
+  display: flex; align-items: center; gap: 4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.ig-tile:hover .ig-ico { opacity: 1; transform: translateY(0); }
+
 .ig-follow {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border-strong);
+  gap: 10px;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #FD8D32 100%);
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  color: var(--text);
-  transition: all .3s;
+  color: white;
+  transition: transform .25s, box-shadow .25s;
+  box-shadow: 0 10px 30px rgba(225,48,108,0.35);
 }
 .ig-follow:hover {
-  background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCB045);
-  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(225,48,108,0.5);
+}
+
+/* Light theme treatment — keep cards visually rich, not plain */
+[data-theme="light"] .glass-card {
+  background: linear-gradient(155deg, #15101a 0%, #1f1428 100%);
+  border-color: rgba(255,62,165,0.15);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 /* ============================================
@@ -1535,15 +1642,16 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 .cta-final h2 {
   font-family: 'Pacifico', cursive;
   font-weight: 400;
-  font-size: clamp(64px, 12vw, 180px);
-  line-height: 0.9;
+  font-size: clamp(56px, 10vw, 160px);
+  line-height: 1.15;
   background: linear-gradient(180deg, #ffd9ec, #ff3ea5);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 0 60px var(--glow));
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   margin-bottom: 24px;
+  padding: 0.15em 0.05em;
 }
 .cta-final p {
   font-size: 20px;
@@ -2171,11 +2279,11 @@ body, nav, .event-card, .glass-card, .modal, footer,
     </div>
     <div class="hero-stats">
       <div class="stat-item">
-        <div class="stat-num" data-count="891">0</div>
+        <div class="stat-num" data-count="891">891</div>
         <div class="stat-label">Community</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num" data-count="23">0</div>
+        <div class="stat-num" data-count="23">23</div>
         <div class="stat-label">Runs gelaufen</div>
       </div>
       <div class="stat-item">
@@ -2267,9 +2375,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
           <div class="row"><span class="key">Distanz</span> 8,3 km · Maschsee Loop</div>
           <div class="row"><span class="key">Pace</span>
             <div class="paces">
-              <span class="pace-tag">6:30</span>
-              <span class="pace-tag">5:30</span>
-              <span class="pace-tag">4:45</span>
+              <span class="pace-tag">7:00 min/km</span>
+              <span class="pace-tag">6:00 min/km</span>
             </div>
           </div>
         </div>
@@ -2440,7 +2547,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="faq-list">
       <details class="faq-item">
         <summary>Welche Pace lauft ihr?<span class="plus">+</span></summary>
-        <p>Wir laufen in drei Pace-Gruppen: 6:30 min/km (chill & Konversation), 5:30 min/km (steady) und 4:45 min/km (faster crew). Du suchst dir vor Ort die Gruppe aus, in der du dich wohlfühlst — auch wechseln ist okay.</p>
+        <p>Wir starten mit zwei Pace-Gruppen: 7:00 min/km (chill & Konversation) und 6:00 min/km (steady). Du suchst dir vor Ort die Gruppe aus, in der du dich wohlfühlst — auch wechseln ist okay. Sobald mehr Leute kommen, kommen weitere Pace-Gruppen dazu.</p>
       </details>
       <details class="faq-item">
         <summary>Muss ich mich anmelden?<span class="plus">+</span></summary>
@@ -2527,9 +2634,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <label>Pace-Gruppe</label>
         <select required>
           <option value="">— wählen —</option>
-          <option>6:30 min/km · Chill & Talk</option>
-          <option>5:30 min/km · Steady</option>
-          <option>4:45 min/km · Faster Crew</option>
+          <option>7:00 min/km · Chill & Talk</option>
+          <option>6:00 min/km · Steady</option>
           <option>Entscheide ich vor Ort</option>
         </select>
         <label>Distanz</label>
@@ -2796,16 +2902,19 @@ function initSite() {
         .from('.hero-stats .stat-item', { opacity: 0, y: 30, duration: 0.6, stagger: 0.1 }, '-=0.4')
         .from('.scroll-hint', { opacity: 0, duration: 1 }, '-=0.4');
 
-  // Count up stats
+  // Count up stats — fromTo so the final value is correct even if interrupted
   document.querySelectorAll('[data-count]').forEach(el => {
     const target = +el.dataset.count;
-    gsap.to(el, {
-      innerText: target,
-      duration: 2,
-      delay: 1,
-      snap: { innerText: 1 },
-      ease: 'power2.out'
-    });
+    gsap.fromTo(el,
+      { innerText: 0 },
+      {
+        innerText: target,
+        duration: 1.8,
+        delay: 0.6,
+        snap: { innerText: 1 },
+        ease: 'power2.out'
+      }
+    );
   });
 
   // Mouse parallax on hero logo — lerped each frame (cheaper than GSAP per event)
