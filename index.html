@@ -890,7 +890,7 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
    MANIFESTO (scroll-pinned text)
 ============================================ */
 .manifesto {
-  height: 170vh;
+  height: 130vh;
   position: relative;
 }
 .manifesto-inner {
@@ -934,16 +934,30 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 }
 .manifesto-text .word {
   display: inline-block;
-  opacity: 0.18;
+  opacity: 0.12;
   margin: 0 0.15em;
-  will-change: opacity, filter;
+  will-change: opacity, color, transform;
   color: #ffffff;
-  text-shadow: 0 0 0 transparent;
-  transition: text-shadow .25s ease-out;
+  transition: color .35s ease-out, text-shadow .35s ease-out, transform .35s ease-out;
+  position: relative;
 }
 .manifesto-text .word.pink { color: var(--pink); }
-.manifesto-text .word.lit { text-shadow: 0 0 30px rgba(255,255,255,0.25); }
-.manifesto-text .word.pink.lit { text-shadow: 0 0 40px rgba(255,62,165,0.5); }
+/* Lit state: word fully appeared — stronger emphasis */
+.manifesto-text .word.lit {
+  text-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+.manifesto-text .word.pink.lit {
+  text-shadow: 0 0 40px rgba(255,62,165,0.55);
+}
+/* Light theme — pure black for max contrast when lit */
+[data-theme="light"] .manifesto-text .word { color: #050505; }
+[data-theme="light"] .manifesto-text .word.pink { color: var(--pink); }
+[data-theme="light"] .manifesto-text .word.lit {
+  text-shadow: 0 0 28px rgba(0,0,0,0.08);
+}
+[data-theme="light"] .manifesto-text .word.pink.lit {
+  text-shadow: 0 0 32px rgba(255,62,165,0.4);
+}
 
 /* ============================================
    EVENTS
@@ -3216,7 +3230,7 @@ function initSite() {
   // Manifesto word reveal — smooth per-word opacity ramp synced to scroll
   const manifestoWords = document.querySelectorAll('#manifestoText .word');
   // Initial dim state
-  manifestoWords.forEach(w => { w.style.opacity = 0.18; });
+  manifestoWords.forEach(w => { w.style.opacity = 0.12; });
   ScrollTrigger.create({
     trigger: '#manifesto',
     start: 'top top',
@@ -3224,27 +3238,25 @@ function initSite() {
     scrub: true,
     onUpdate: self => {
       const total = manifestoWords.length;
-      // Map scroll progress to a "reveal head" that travels through the words.
-      // The head can be at a fractional position — each word lights up smoothly
-      // as the head passes through its index.
-      const startP = 0.05;
-      const endP = 0.92;
+      // Tighter range — reveal happens faster and more dramatically
+      const startP = 0.0;
+      const endP = 0.80;
       const adj = Math.max(0, Math.min(1, (self.progress - startP) / (endP - startP)));
-      const head = adj * (total + 1);
-      const RAMP = 1.6; // how many word-widths it takes to fully light up
+      const head = adj * (total + 1.5);
+      const RAMP = 1.2; // how many word-widths it takes to fully light up
       manifestoWords.forEach((w, i) => {
         const dist = head - i;
         let opacity;
-        if (dist < -0.4) opacity = 0.18;
+        if (dist < -0.3) opacity = 0.12;
         else if (dist > RAMP) opacity = 1;
         else {
-          const t = (dist + 0.4) / (RAMP + 0.4);
+          const t = (dist + 0.3) / (RAMP + 0.3);
           const eased = t * t * (3 - 2 * t); // smoothstep
-          opacity = 0.18 + eased * 0.82;
+          opacity = 0.12 + eased * 0.88;
         }
         w.style.opacity = opacity;
-        // Add subtle glow when nearly lit
-        w.classList.toggle('lit', opacity > 0.92);
+        // Add glow + slight scale when nearly lit for extra emphasis
+        w.classList.toggle('lit', opacity > 0.88);
       });
     }
   });
