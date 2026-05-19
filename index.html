@@ -935,38 +935,30 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 .manifesto-text .word {
   display: inline-block;
   margin: 0 0.15em;
-  /* Hidden initial state */
-  opacity: 0;
-  transform: translateY(24px);
-  /* Default color for dark theme — light gray, transitions to white */
-  color: #6a6a78;
-  transition:
-    opacity .45s cubic-bezier(.16,1,.3,1),
-    transform .55s cubic-bezier(.16,1,.3,1),
-    color .35s ease-out,
-    text-shadow .35s ease-out;
-  will-change: opacity, transform, color;
-}
-.manifesto-text .word.pink { color: rgba(255, 62, 165, 0.5); }
-
-/* LIT state — fully revealed, max contrast */
-.manifesto-text .word.lit {
+  /* Always visible from the start, but very muted */
   opacity: 1;
-  transform: translateY(0);
+  color: rgba(255, 255, 255, 0.18); /* dark theme: barely-there white */
+  transition: color .4s ease-out, text-shadow .4s ease-out;
+  will-change: color;
+}
+.manifesto-text .word.pink { color: rgba(255, 62, 165, 0.3); }
+
+/* LIT state — fully revealed, max contrast (dark theme) */
+.manifesto-text .word.lit {
   color: #ffffff;
-  text-shadow: 0 0 30px rgba(255,255,255,0.25);
+  text-shadow: 0 0 30px rgba(255,255,255,0.3);
 }
 .manifesto-text .word.pink.lit {
   color: var(--pink);
   text-shadow: 0 0 36px rgba(255, 62, 165, 0.55);
 }
 
-/* LIGHT theme — pure black when lit, light gray when not */
-[data-theme="light"] .manifesto-text .word { color: #b8b8c0; }
-[data-theme="light"] .manifesto-text .word.pink { color: rgba(255, 62, 165, 0.35); }
+/* LIGHT theme: muted starts very pale, lit goes pitch black */
+[data-theme="light"] .manifesto-text .word { color: rgba(0, 0, 0, 0.16); }
+[data-theme="light"] .manifesto-text .word.pink { color: rgba(255, 62, 165, 0.3); }
 [data-theme="light"] .manifesto-text .word.lit {
   color: #000000;
-  text-shadow: 0 0 30px rgba(0,0,0,0.08);
+  text-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
 [data-theme="light"] .manifesto-text .word.pink.lit {
   color: var(--pink);
