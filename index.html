@@ -761,6 +761,53 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; gap: 12px; }
 }
 
+/* ===== EVENT GALLERY (event-based, curated grid + lightbox) ===== */
+.gallery-grid[hidden] { display: none !important; }
+.ev-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+.ev-chip {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .5px;
+  color: var(--text-mute); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 9px 16px; cursor: none; transition: all .2s; white-space: nowrap;
+}
+.ev-chip:hover { color: var(--text); border-color: var(--border-strong); }
+.ev-chip.active { color: #fff; background: var(--pink); border-color: var(--pink); box-shadow: 0 0 24px var(--glow-soft); }
+.ev-chip .n { opacity: .55; margin-left: 6px; }
+.ev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+@media (max-width: 600px) { .ev-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
+.ev-tile {
+  position: relative; aspect-ratio: 1; border-radius: 16px; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border); cursor: none;
+}
+.ev-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.ev-tile:hover img { transform: scale(1.07); }
+.ev-tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(0,0,0,.55)); opacity: 0; transition: opacity .3s; }
+.ev-tile:hover::after { opacity: 1; }
+.ev-badge {
+  position: absolute; left: 10px; bottom: 9px; z-index: 2; font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: .5px; color: #fff; background: rgba(0,0,0,.45);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border-radius: 6px; padding: 4px 8px;
+  opacity: 0; transform: translateY(4px); transition: all .3s;
+}
+.ev-tile:hover .ev-badge { opacity: 1; transform: translateY(0); }
+.ev-badge.rb { background: var(--pink); }
+.ev-more { margin-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-dim); text-align: center; }
+
+/* Lightbox */
+.lb { position: fixed; inset: 0; z-index: 9999; background: rgba(4,4,10,.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; }
+.lb.open { display: flex; opacity: 1; }
+.lb-img { max-width: 92vw; max-height: 82vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,.6); user-select: none; -webkit-user-drag: none; }
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--border-strong); background: rgba(255,255,255,.06); color: #fff; font-size: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+.lb-nav:hover { background: var(--pink); border-color: var(--pink); }
+.lb-prev { left: 18px; } .lb-next { right: 18px; }
+.lb-close { position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-strong); background: rgba(255,255,255,.06); color: #fff; font-size: 20px; cursor: pointer; transition: all .2s; }
+.lb-close:hover { background: var(--pink); border-color: var(--pink); }
+.lb-cap { position: absolute; bottom: 22px; left: 0; right: 0; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; color: var(--text-mute); }
+.lb-cap b { color: #fff; font-weight: 500; }
+@media (max-width: 600px) {
+  .lb-nav { width: 44px; height: 44px; font-size: 22px; } .lb-prev { left: 8px; } .lb-next { right: 8px; }
+  .lb-img { max-width: 96vw; max-height: 74vh; }
+}
+
 .g-item {
   position: relative;
   border-radius: 20px;
@@ -2764,21 +2811,21 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <span>@lecirqle · Hannover</span>
   </div>
   <div class="marquee-track">
-    <div class="m-photo"><img src="photos/photo-1.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
-    <div class="m-photo"><img src="photos/photo-2.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
-    <div class="m-photo"><img src="photos/photo-3.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
-    <div class="m-photo"><img src="photos/photo-4.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
-    <div class="m-photo"><img src="photos/photo-5.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Boombox Run</div></div>
-    <div class="m-photo"><img src="photos/photo-6.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Linden Tunnel</div></div>
-    <div class="m-photo"><img src="photos/photo-7.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Hannover Mitte</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
+    <div class="m-photo"><img src="photos/events/2026-05-17/thumb/010.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/070.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
+    <div class="m-photo"><img src="photos/events/2026-05-17/thumb/040.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Boombox Run</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/110.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Linden Tunnel</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-07/thumb/020.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Hannover Mitte</div></div>
     <!-- Duplicate for seamless loop -->
-    <div class="m-photo"><img src="photos/photo-1.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
-    <div class="m-photo"><img src="photos/photo-2.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
-    <div class="m-photo"><img src="photos/photo-3.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
-    <div class="m-photo"><img src="photos/photo-4.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
-    <div class="m-photo"><img src="photos/photo-5.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Boombox Run</div></div>
-    <div class="m-photo"><img src="photos/photo-6.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Linden Tunnel</div></div>
-    <div class="m-photo"><img src="photos/photo-7.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Hannover Mitte</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
+    <div class="m-photo"><img src="photos/events/2026-05-17/thumb/010.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/070.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
+    <div class="m-photo"><img src="photos/events/2026-05-17/thumb/040.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Boombox Run</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/110.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Linden Tunnel</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-07/thumb/020.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Hannover Mitte</div></div>
   </div>
 </div>
 
@@ -2868,17 +2915,20 @@ body, nav, .event-card, .glass-card, .modal, footer,
       </div>
       <div class="gh-meta">→ Mehr auf @lecirqle</div>
     </div>
-    <div class="gallery-grid">
+    <div class="ev-filters" id="evFilters"></div>
+      <div class="ev-grid" id="evGrid"></div>
+      <div class="ev-more" id="evMore"></div>
+      <div class="gallery-grid" hidden aria-hidden="true">
       <div class="g-item g-1" data-tilt-soft>
-        <img src="photos/photo-1.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-1.jpg</div>'">
+        <img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-1.jpg</div>'">
         <div class="caption">The boombox crew<span class="cap-sub">Sunday Run · CODOS</span></div>
       </div>
       <div class="g-item g-2" data-tilt-soft>
-        <img src="photos/photo-2.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-2.jpg</div>'">
+        <img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-2.jpg</div>'">
         <div class="caption">Maschsee Pace<span class="cap-sub">Eilenriede</span></div>
       </div>
       <div class="g-item g-3" data-tilt-soft>
-        <img src="photos/photo-3.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-3.jpg</div>'">
+        <img src="photos/events/2026-05-17/thumb/010.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-3.jpg</div>'">
         <div class="caption">Pink Beanie Squad<span class="cap-sub">Linden</span></div>
       </div>
       <div class="g-item g-4 video" data-tilt-soft>
@@ -2887,15 +2937,15 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <div class="caption">Crew on the move<span class="cap-sub">play reel</span></div>
       </div>
       <div class="g-item g-5" data-tilt-soft>
-        <img src="photos/photo-4.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-4.jpg</div>'">
+        <img src="photos/events/2026-06-03-redbull/thumb/070.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-4.jpg</div>'">
         <div class="caption">3 to ride<span class="cap-sub">Maschsee Loop</span></div>
       </div>
       <div class="g-item g-6" data-tilt-soft>
-        <img src="photos/photo-5.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-5.jpg</div>'">
+        <img src="photos/events/2026-05-17/thumb/040.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-5.jpg</div>'">
         <div class="caption">Run with us<span class="cap-sub">Hannover Mitte</span></div>
       </div>
       <div class="g-item g-7" data-tilt-soft>
-        <img src="photos/photo-6.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-6.jpg</div>'">
+        <img src="photos/events/2026-06-03-redbull/thumb/110.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-6.jpg</div>'">
         <div class="caption">Linden Allee<span class="cap-sub">Tunnel run</span></div>
       </div>
       <div class="g-item g-8 video" data-tilt-soft>
@@ -2903,7 +2953,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <div class="ph-label">video-2.mp4</div>
       </div>
       <div class="g-item g-9" data-tilt-soft>
-        <img src="photos/photo-7.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-7.jpg</div>'">
+        <img src="photos/events/2026-06-07/thumb/020.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-7.jpg</div>'">
         <div class="caption">The whole crew<span class="cap-sub">Group shot · 70+</span></div>
       </div>
       <div class="g-item g-10" data-tilt-soft>
@@ -4222,5 +4272,149 @@ document.addEventListener('keydown', e => {
 });
 </script>
 
+<!-- ===== EVENT GALLERY LIGHTBOX ===== -->
+<div class="lb" id="lb" aria-hidden="true" role="dialog" aria-label="Foto-Galerie">
+  <button class="lb-close" id="lbClose" aria-label="Schließen">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Zurück">‹</button>
+  <img class="lb-img" id="lbImg" alt="cirqle Event Foto">
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Weiter">›</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<script>
+(function () {
+  // Events — neueste / Highlight zuerst. count = Anzahl Fotos im Ordner.
+  var EVENTS = [
+    { slug: '2026-06-03-redbull', title: 'Cirqle × Red Bull', chip: 'Cirqle × Red Bull', badge: 'Red Bull', date: '03.06.26', count: 144, rb: true },
+    { slug: '2026-06-07',         title: 'Sunday Run',        chip: '07.06',              badge: '07.06',    date: '07.06.26', count: 28 },
+    { slug: '2026-05-17',         title: 'Sunday Run',        chip: '17.05',              badge: '17.05',    date: '17.05.26', count: 73 }
+  ];
+  var BASE = 'photos/events/';
+  var GRID_PER_EVENT_ALL = 12; // pro Event im "Alle"-View
+  var GRID_PER_EVENT_ONE = 30; // im Einzel-Event-View
+
+  var byId = {};
+  EVENTS.forEach(function (e) { byId[e.slug] = e; });
+
+  function pad3(n) { return ('00' + n).slice(-3); }
+  function thumb(slug, i) { return BASE + slug + '/thumb/' + pad3(i) + '.jpg'; }
+  function large(slug, i) { return BASE + slug + '/large/' + pad3(i) + '.jpg'; }
+
+  // gleichmäßig verteilte Indizes (1-basiert) über count
+  function curated(count, k) {
+    if (count <= k) { var a = []; for (var i = 1; i <= count; i++) a.push(i); return a; }
+    var out = [], step = count / k;
+    for (var j = 0; j < k; j++) {
+      var idx = Math.round(j * step) + 1;
+      if (idx > count) idx = count;
+      if (out.indexOf(idx) === -1) out.push(idx);
+    }
+    return out;
+  }
+
+  var filters = document.getElementById('evFilters');
+  var grid = document.getElementById('evGrid');
+  var more = document.getElementById('evMore');
+  if (!filters || !grid) return;
+
+  var active = 'all';
+  var total = EVENTS.reduce(function (s, e) { return s + e.count; }, 0);
+
+  function renderFilters() {
+    var html = '<button class="ev-chip active" data-f="all">Alle<span class="n">' + total + '</span></button>';
+    EVENTS.forEach(function (e) {
+      html += '<button class="ev-chip" data-f="' + e.slug + '">' + e.chip + '<span class="n">' + e.count + '</span></button>';
+    });
+    filters.innerHTML = html;
+    Array.prototype.forEach.call(filters.querySelectorAll('.ev-chip'), function (btn) {
+      btn.addEventListener('click', function () {
+        active = btn.getAttribute('data-f');
+        Array.prototype.forEach.call(filters.querySelectorAll('.ev-chip'), function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderGrid();
+      });
+    });
+  }
+
+  function tileHTML(e, idx, showBadge) {
+    return '<button class="ev-tile" data-slug="' + e.slug + '" data-idx="' + idx + '" aria-label="' + e.title + '">' +
+             '<img loading="lazy" src="' + thumb(e.slug, idx) + '" alt="' + e.title + ' — cirqle">' +
+             (showBadge ? '<span class="ev-badge' + (e.rb ? ' rb' : '') + '">' + e.badge + '</span>' : '') +
+           '</button>';
+  }
+
+  function renderGrid() {
+    var html = '', shown = 0;
+    if (active === 'all') {
+      EVENTS.forEach(function (e) {
+        curated(e.count, GRID_PER_EVENT_ALL).forEach(function (i) { html += tileHTML(e, i, true); shown++; });
+      });
+      more.textContent = shown + ' von ' + total + ' Fotos — tippe für die komplette Galerie';
+    } else {
+      var e = byId[active];
+      curated(e.count, GRID_PER_EVENT_ONE).forEach(function (i) { html += tileHTML(e, i, false); shown++; });
+      more.textContent = e.title + ' · ' + e.date + ' — ' + e.count + ' Fotos, tippe zum Durchblättern';
+    }
+    grid.innerHTML = html;
+    Array.prototype.forEach.call(grid.querySelectorAll('.ev-tile'), function (t) {
+      t.addEventListener('click', function () {
+        openLB(t.getAttribute('data-slug'), parseInt(t.getAttribute('data-idx'), 10));
+      });
+    });
+  }
+
+  // ---- Lightbox (über den KOMPLETTEN Event-Satz) ----
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lbImg');
+  var lbCap = document.getElementById('lbCap');
+  var cur = { slug: null, idx: 1 };
+
+  function preload(slug, i) { if (i >= 1 && i <= byId[slug].count) { var im = new Image(); im.src = large(slug, i); } }
+
+  function showLB() {
+    var e = byId[cur.slug];
+    lbImg.src = large(cur.slug, cur.idx);
+    lbCap.innerHTML = '<b>' + e.title + '</b> · ' + e.date + ' · ' + cur.idx + ' / ' + e.count;
+    preload(cur.slug, cur.idx + 1);
+    preload(cur.slug, cur.idx - 1);
+  }
+  function openLB(slug, idx) {
+    cur.slug = slug; cur.idx = idx;
+    lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    showLB();
+  }
+  function closeLB() {
+    lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function step(d) {
+    var n = byId[cur.slug].count;
+    cur.idx = ((cur.idx - 1 + d + n) % n) + 1;
+    showLB();
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLB);
+  document.getElementById('lbPrev').addEventListener('click', function () { step(-1); });
+  document.getElementById('lbNext').addEventListener('click', function () { step(1); });
+  lb.addEventListener('click', function (ev) { if (ev.target === lb) closeLB(); });
+  document.addEventListener('keydown', function (ev) {
+    if (!lb.classList.contains('open')) return;
+    if (ev.key === 'Escape') closeLB();
+    else if (ev.key === 'ArrowLeft') step(-1);
+    else if (ev.key === 'ArrowRight') step(1);
+  });
+  // Touch-Swipe
+  var tx = 0;
+  lb.addEventListener('touchstart', function (ev) { tx = ev.changedTouches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (ev) {
+    var dx = ev.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  renderFilters();
+  renderGrid();
+})();
+</script>
 </body>
 </html>
