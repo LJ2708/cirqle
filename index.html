@@ -785,6 +785,21 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
 [data-theme="light"] .collab { background: rgba(0,0,0,0.02); }
 [data-theme="light"] .rc-unit { background: rgba(0,0,0,0.03); }
 
+/* Pace-Gruppen + Erklärung */
+.pace-groups { margin-top: 28px; }
+.pg-head { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-mute); text-transform: uppercase; margin-bottom: 14px; }
+.pg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .pg-row { grid-template-columns: 1fr; } }
+.pg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; transition: border-color .2s; }
+.pg-card:hover { border-color: var(--border-strong); }
+.pg-pace { font-family: 'IBM Plex Mono', monospace; font-size: 26px; font-weight: 600; color: var(--pink); line-height: 1; }
+.pg-pace span { font-size: 13px; color: var(--text-mute); margin-left: 4px; }
+.pg-name { font-weight: 800; font-size: 15px; margin: 8px 0 6px; color: var(--text); }
+.pg-desc { font-size: 13px; line-height: 1.55; color: var(--text-mute); }
+.pg-explain { margin-top: 14px; background: var(--glow-soft); border: 1px solid rgba(255,62,165,.2); border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.6; color: var(--text); }
+.pg-explain strong { color: var(--pink); }
+[data-theme="light"] .pg-card { background: rgba(0,0,0,0.02); }
+
 /* ===== EVENT GALLERY (event-based, curated grid + lightbox) ===== */
 .gallery-grid[hidden] { display: none !important; }
 .ev-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -2817,8 +2832,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <div class="stat-label">Runs gelaufen</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">8,3<span style="font-size:0.5em">km</span></div>
-        <div class="stat-label">Maschsee Loop</div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Pace-Gruppen</div>
       </div>
     </div>
   </div>
@@ -2902,14 +2917,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
         </div>
         <h3>Sunday Run · CODOS</h3>
         <div class="event-info">
-          <div class="row"><span class="key">Start</span> CODOS Hannover · 10:00</div>
-          <div class="row"><span class="key">Distanz</span> 8,3 km · Maschsee Loop</div>
-          <div class="row"><span class="key">Pace</span>
-            <div class="paces">
-              <span class="pace-tag">7:00 min/km</span>
-              <span class="pace-tag">6:00 min/km</span>
-            </div>
-          </div>
+          <div class="row"><span class="key">Start</span> Start &amp; Uhrzeit folgen</div>
+          <div class="row"><span class="key">Distanz</span> Strecke variiert je nach Run</div>
         </div>
         <div class="event-voucher">
           <div class="v-ico">☕</div>
@@ -2927,6 +2936,24 @@ body, nav, .event-card, .glass-card, .modal, footer,
         </button>
       </div>
     </div>
+    <!-- Pace-Gruppen + Erklärung (Pace = min/km, für Einsteiger:innen) -->
+    <div class="pace-groups">
+      <div class="pg-head">Zwei Pace-Gruppen · für jedes Level</div>
+      <div class="pg-row">
+        <div class="pg-card">
+          <div class="pg-pace">7:00 <span>min/km</span></div>
+          <div class="pg-name">Chill &amp; Talk</div>
+          <div class="pg-desc">Locker — du kannst dich beim Laufen unterhalten. Etwa 8,5 km/h, 5 km in ~35 Min. Ideal für Einsteiger:innen.</div>
+        </div>
+        <div class="pg-card">
+          <div class="pg-pace">6:00 <span>min/km</span></div>
+          <div class="pg-name">Steady</div>
+          <div class="pg-desc">Zügig, aber machbar. Etwa 10 km/h, 5 km in ~30 Min. Für alle mit etwas Lauf-Erfahrung.</div>
+        </div>
+      </div>
+      <div class="pg-explain"><strong>Was heißt „Pace"?</strong> Das sind die Minuten, die du für einen Kilometer brauchst — 7:00 min/km heißt 7 Minuten pro Kilometer. Keine Sorge: Du entscheidest vor Ort, welche Gruppe passt, und wechseln ist jederzeit ok. Alle Paces willkommen.</div>
+    </div>
+
     <!-- Vergangene Runs & Kollabs (bewusst nicht als feste Partner formuliert) -->
     <div class="collabs">
       <div class="collabs-head">Wo wir schon waren · Kollabs & Spots</div>
@@ -3245,7 +3272,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <select required>
           <option value="">— wählen —</option>
           <option>5 km</option>
-          <option>8,3 km (Maschsee Loop)</option>
+          <option>~8 km</option>
           <option>10 km</option>
         </select>
         <label class="modal-checkbox">
@@ -4493,9 +4520,9 @@ document.addEventListener('keydown', e => {
   //    Auf null lassen ODER ein vergangenes Datum => automatisch "Stay tuned".
   var NEXT_RUN = {
     date: null,
-    title: 'Sunday Run · CODOS',
-    startLabel: 'CODOS Hannover · 10:00',
-    distance: '8,3 km · Maschsee Loop',
+    title: 'Sunday Run',
+    startLabel: 'Start & Uhrzeit folgen',      // pro Run anpassen (Startpunkt variiert)
+    distance: 'Strecke variiert je nach Run',  // pro Run anpassen
     voucherText: 'Gratis Filterkaffee bei CODOS für die ersten <strong>100</strong> Angemeldeten',
     voucherCode: 'CODOS-KAFFEE',
     voucherWhat: 'Gratis Filterkaffee bei CODOS'
