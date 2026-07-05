@@ -761,6 +761,30 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; gap: 12px; }
 }
 
+/* ===== NEXT RUN — Countdown / Stay-tuned / Kollabs ===== */
+.run-countdown { display: flex; gap: 10px; margin: 18px 0 6px; }
+.rc-unit { flex: 1; background: var(--surface-strong); border: 1px solid var(--border); border-radius: 14px; padding: 12px 4px; text-align: center; }
+.rc-num { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600; color: var(--text); line-height: 1; }
+.rc-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-mute); margin-top: 6px; text-transform: uppercase; }
+
+.staytuned { text-align: center; padding: 20px 8px 8px; }
+.st-pulse { width: 14px; height: 14px; border-radius: 50%; background: var(--pink); margin: 0 auto 16px; box-shadow: 0 0 0 0 var(--glow); animation: stPulse 2s infinite; }
+@keyframes stPulse { 0% { box-shadow: 0 0 0 0 rgba(255,62,165,.5); } 70% { box-shadow: 0 0 0 16px rgba(255,62,165,0); } 100% { box-shadow: 0 0 0 0 rgba(255,62,165,0); } }
+.st-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--pink); text-transform: uppercase; }
+.st-title { font-size: clamp(26px, 4vw, 40px); margin: 14px 0 12px; line-height: 1.05; }
+.st-sub { color: var(--text-mute); font-size: 15px; line-height: 1.6; max-width: 460px; margin: 0 auto 24px; }
+
+.collabs { margin-top: 28px; }
+.collabs-head { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-mute); text-transform: uppercase; margin-bottom: 14px; }
+.collabs-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.collab { display: flex; flex-direction: column; gap: 3px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 18px; transition: transform .2s, border-color .2s; }
+.collab:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.collab .c-name { font-weight: 800; font-size: 15px; color: var(--text); }
+.collab .c-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .5px; color: var(--text-mute); }
+.collabs-note { font-size: 12px; color: var(--text-dim); margin-top: 12px; }
+[data-theme="light"] .collab { background: rgba(0,0,0,0.02); }
+[data-theme="light"] .rc-unit { background: rgba(0,0,0,0.03); }
+
 /* ===== EVENT GALLERY (event-based, curated grid + lightbox) ===== */
 .gallery-grid[hidden] { display: none !important; }
 .ev-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -2759,7 +2783,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <div class="hero-inner">
     <div class="hero-status">
       <span class="live"></span>
-      <span>Next run · So 07.06 · 10:00 · CODOS</span>
+      <span id="heroNextRun">Next run · Termin folgt · Stay tuned</span>
     </div>
     <h1 id="heroTitle">
       <svg class="hero-svg-logo" id="heroLogoSvg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="cirqle">
@@ -2865,7 +2889,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
       <div class="events-meta">→ Anmeldung sichert dir dein Goodie</div>
     </div>
 
-    <div class="event-grid single">
+    <div class="event-grid single" id="nextRunGrid">
+      <!-- Wird per JS aus NEXT_RUN gerendert (Countdown oder Stay-tuned). Fallback unten: -->
       <div class="event-card" data-tilt>
         <div class="ec-glow"></div>
         <div class="event-date-block">
@@ -2901,6 +2926,17 @@ body, nav, .event-card, .glass-card, .modal, footer,
           Anmelden <span>→</span>
         </button>
       </div>
+    </div>
+    <!-- Vergangene Runs & Kollabs (bewusst nicht als feste Partner formuliert) -->
+    <div class="collabs">
+      <div class="collabs-head">Wo wir schon waren · Kollabs & Spots</div>
+      <div class="collabs-row">
+        <div class="collab"><span class="c-name">Red Bull</span><span class="c-tag">Special Edition Run</span></div>
+        <div class="collab"><span class="c-name">Bestia</span><span class="c-tag">After-Run Pizza</span></div>
+        <div class="collab"><span class="c-name">Koloss</span><span class="c-tag">Kollab-Run</span></div>
+        <div class="collab"><span class="c-name">CODOS</span><span class="c-tag">Sunday Start & Kaffee</span></div>
+      </div>
+      <div class="collabs-note">Eine Auswahl bisheriger Runs & Kollabs — keine festen Partnerschaften, einfach gute Vibes.</div>
     </div>
   </div>
 </section>
@@ -3155,6 +3191,36 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div>BUILT WITH 💗 FOR THE COMMUNITY</div>
   </div>
 </footer>
+
+<!-- NOTIFY MODAL (Stay tuned) -->
+<div class="modal-bg" id="notifyModal">
+  <div class="modal">
+    <button class="modal-close" data-hover onclick="closeNotify()">✕</button>
+    <div id="notifyForm">
+      <h3><span class="script">Stay tuned.</span></h3>
+      <div class="modal-sub">Trag dich ein — wir schreiben dir, sobald der nächste Run steht.</div>
+      <form onsubmit="return submitNotify(event)">
+        <label>Name</label>
+        <input id="notifyName" type="text" required placeholder="Max Mustermann">
+        <label>E-Mail</label>
+        <input id="notifyEmail" type="email" required placeholder="du@email.de">
+        <label class="modal-checkbox">
+          <input type="checkbox" required>
+          Ich möchte über kommende cirqle Runs benachrichtigt werden
+        </label>
+        <button type="submit" class="submit-btn" data-hover>Auf die Liste <span>→</span></button>
+      </form>
+    </div>
+    <div id="notifyDone" style="display: none;">
+      <div class="success-state">
+        <div class="check">✦</div>
+        <h3 style="font-family: 'Pacifico', cursive; font-weight: 400; color: var(--pink); font-size: 36px;">Du bist auf der Liste!</h3>
+        <div class="modal-sub">Wir melden uns, sobald der nächste Run steht. 💗</div>
+        <button class="submit-btn" data-hover onclick="closeNotify()" style="margin-top: 20px;">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="signupModal">
@@ -4414,6 +4480,155 @@ document.addEventListener('keydown', e => {
 
   renderFilters();
   renderGrid();
+})();
+</script>
+<script>
+/* ============================================================
+   NÄCHSTER RUN — self-updating (Countdown / Stay-tuned)
+   >>> Zum Pflegen NUR dieses NEXT_RUN-Objekt anfassen. <<<
+============================================================ */
+(function () {
+  // ── Wenn der nächste Run feststeht: date auf ISO setzen ──
+  //    z.B. date: '2026-07-13T10:00:00'
+  //    Auf null lassen ODER ein vergangenes Datum => automatisch "Stay tuned".
+  var NEXT_RUN = {
+    date: null,
+    title: 'Sunday Run · CODOS',
+    startLabel: 'CODOS Hannover · 10:00',
+    distance: '8,3 km · Maschsee Loop',
+    voucherText: 'Gratis Filterkaffee bei CODOS für die ersten <strong>100</strong> Angemeldeten',
+    voucherCode: 'CODOS-KAFFEE',
+    voucherWhat: 'Gratis Filterkaffee bei CODOS'
+  };
+
+  // ── Formspree/Getform Endpoint hier eintragen (dann landen die
+  //    Stay-tuned-Anmeldungen in deinem Posteingang). Leer = mailto-Fallback. ──
+  var NOTIFY_ENDPOINT = '';
+  var NOTIFY_MAILTO = 'hello@lecirqle.de';
+
+  var MONTHS = ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  var DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+  var pad2 = function (n) { return ('0' + n).slice(-2); };
+
+  var grid = document.getElementById('nextRunGrid');
+  var heroNext = document.getElementById('heroNextRun');
+
+  var runDate = NEXT_RUN.date ? new Date(NEXT_RUN.date) : null;
+  var scheduled = runDate && !isNaN(runDate) && runDate.getTime() > Date.now();
+
+  function daysLeft(d) { return Math.ceil((d.getTime() - Date.now()) / 86400000); }
+  function cdParts(d) {
+    var ms = Math.max(0, d.getTime() - Date.now());
+    return {
+      days: Math.floor(ms / 86400000),
+      hrs: Math.floor((ms % 86400000) / 3600000),
+      mins: Math.floor((ms % 3600000) / 60000)
+    };
+  }
+  function longDate(d) { return DAYS[d.getDay()] + ', ' + d.getDate() + '. ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear(); }
+
+  function tickCountdown() {
+    var el = document.getElementById('rc');
+    if (!el || !scheduled) return;
+    var p = cdParts(runDate);
+    el.innerHTML =
+      '<div class="rc-unit"><div class="rc-num">' + p.days + '</div><div class="rc-lbl">Tage</div></div>' +
+      '<div class="rc-unit"><div class="rc-num">' + p.hrs + '</div><div class="rc-lbl">Std</div></div>' +
+      '<div class="rc-unit"><div class="rc-num">' + p.mins + '</div><div class="rc-lbl">Min</div></div>';
+  }
+
+  function renderScheduled() {
+    var d = runDate, day = pad2(d.getDate()), mon = MONTHS[d.getMonth()], dow = DAYS[d.getDay()];
+    grid.classList.add('single');
+    grid.innerHTML =
+      '<div class="event-card">' +
+        '<div class="ec-glow"></div>' +
+        '<div class="event-date-block"><div><div class="event-date">' + day + '</div>' +
+          '<div class="event-day">' + dow + ' · ' + mon + '</div></div>' +
+          '<span class="event-tag">Next Run</span></div>' +
+        '<h3>' + NEXT_RUN.title + '</h3>' +
+        '<div class="run-countdown" id="rc"></div>' +
+        '<div class="event-info">' +
+          '<div class="row"><span class="key">Start</span> ' + NEXT_RUN.startLabel + '</div>' +
+          '<div class="row"><span class="key">Distanz</span> ' + NEXT_RUN.distance + '</div>' +
+        '</div>' +
+        '<div class="event-voucher"><div class="v-ico">☕</div><div class="v-text">' + NEXT_RUN.voucherText + '</div></div>' +
+        '<div class="event-capacity" id="capacityBox"><div class="cap-header">' +
+          '<span class="cap-count"><strong id="capCount">63</strong>/<span id="capMax">100</span> Plätze · Gratis Kaffees</span>' +
+          '<span class="cap-status" id="capStatus">Sichere dir einen</span></div>' +
+          '<div class="cap-bar"><div class="cap-fill" id="capFill" data-target="63"></div></div></div>' +
+        '<button class="event-signup" data-hover>Anmelden <span>→</span></button>' +
+      '</div>';
+    tickCountdown();
+    grid.querySelector('.event-signup').addEventListener('click', function () {
+      if (typeof openSignup === 'function') openSignup(NEXT_RUN.title, longDate(d), NEXT_RUN.voucherCode, NEXT_RUN.voucherWhat);
+    });
+    if (typeof initCapacity === 'function') initCapacity();
+    if (heroNext) heroNext.textContent = 'Next run · ' + dow + ' ' + day + '.' + pad2(d.getMonth() + 1) + ' · ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ' · noch ' + daysLeft(d) + ' Tag' + (daysLeft(d) === 1 ? '' : 'e');
+    setInterval(tickCountdown, 60000);
+  }
+
+  function renderStayTuned() {
+    grid.classList.remove('single');
+    grid.innerHTML =
+      '<div class="event-card" style="text-align:center">' +
+        '<div class="ec-glow"></div>' +
+        '<div class="staytuned">' +
+          '<div class="st-pulse"></div>' +
+          '<div class="st-eyebrow">Termin folgt</div>' +
+          '<h3 class="st-title">Nächster Run wird<br>gerade geplant.</h3>' +
+          '<p class="st-sub">Der nächste cirqle Sunday steht noch nicht fest. Trag dich ein — wir schreiben dir, sobald Datum & Route stehen. Kein Spam, nur Runs.</p>' +
+          '<button class="event-signup" id="notifyBtn" data-hover style="max-width:320px;margin:0 auto">Benachrichtige mich <span>→</span></button>' +
+        '</div>' +
+      '</div>';
+    grid.querySelector('#notifyBtn').addEventListener('click', window.openNotify);
+    if (heroNext) heroNext.textContent = 'Nächster Run: Termin folgt · Stay tuned';
+    var heroCta = document.querySelector('.hero-ctas .btn-primary');
+    if (heroCta) heroCta.innerHTML = 'Bleib informiert <span class="arrow">→</span>';
+  }
+
+  /* ── Notify Modal ── */
+  window.openNotify = function () {
+    document.getElementById('notifyForm').style.display = 'block';
+    document.getElementById('notifyDone').style.display = 'none';
+    document.getElementById('notifyModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeNotify = function () {
+    document.getElementById('notifyModal').classList.remove('show');
+    document.body.style.overflow = '';
+  };
+  window.submitNotify = function (e) {
+    e.preventDefault();
+    var data = {
+      name: document.getElementById('notifyName').value,
+      email: document.getElementById('notifyEmail').value,
+      _subject: 'cirqle · Stay-tuned Anmeldung',
+      source: 'lecirqle.de · stay-tuned'
+    };
+    var done = function () {
+      document.getElementById('notifyForm').style.display = 'none';
+      document.getElementById('notifyDone').style.display = 'block';
+    };
+    if (NOTIFY_ENDPOINT) {
+      fetch(NOTIFY_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(done).catch(done);
+    } else {
+      window.location.href = 'mailto:' + NOTIFY_MAILTO +
+        '?subject=' + encodeURIComponent('Stay tuned – nächster Run') +
+        '&body=' + encodeURIComponent('Name: ' + data.name + '\nEmail: ' + data.email + '\n\nBitte benachrichtigt mich zum nächsten cirqle Run.');
+      done();
+    }
+    return false;
+  };
+  var nm = document.getElementById('notifyModal');
+  if (nm) nm.addEventListener('click', function (e) { if (e.target === nm) window.closeNotify(); });
+
+  // ── Init ──
+  if (grid) { if (scheduled) renderScheduled(); else renderStayTuned(); }
 })();
 </script>
 </body>
