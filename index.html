@@ -6,7 +6,7 @@
 
 <!-- Primary SEO -->
 <title>cirqle ✦ run. meet. connect. — Run Club Hannover</title>
-<meta name="description" content="cirqle ist der Run Club aus Hannover. Jeden Sonntag 10:00 ab CODOS, 8,3 km um den Maschsee. Alle Paces willkommen. Kostenlos. Community first.">
+<meta name="description" content="cirqle ist der Run Club aus Hannover. Jede Woche laufen — wechselnde Strecken, zwei Pace-Gruppen (6:00 & 7:00 min/km). Alle Paces willkommen. Kostenlos. Community first.">
 <meta name="keywords" content="Run Club Hannover, Laufen Hannover, Maschsee Lauf, Sunday Run, cirqle, lecirqle, Joggen Hannover, Laufgruppe Hannover">
 <meta name="author" content="cirqle Hannover">
 <meta name="theme-color" content="#fafaf7">
@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://lecirqle.de/">
 <meta property="og:site_name" content="cirqle Run Club">
 <meta property="og:title" content="cirqle ✦ run. meet. connect.">
-<meta property="og:description" content="Der Run Club aus Hannover. Jeden Sonntag um den Maschsee. Alle Paces. Kostenlos. Community first.">
+<meta property="og:description" content="Der Run Club aus Hannover. Jede Woche laufen — alle Paces willkommen. Kostenlos. Community first.">
 <meta property="og:image" content="https://lecirqle.de/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -28,7 +28,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="cirqle ✦ run. meet. connect.">
-<meta name="twitter:description" content="Der Run Club aus Hannover. Jeden Sonntag um den Maschsee.">
+<meta name="twitter:description" content="Der Run Club aus Hannover. Jede Woche laufen — alle Paces willkommen.">
 <meta name="twitter:image" content="https://lecirqle.de/og-image.jpg">
 
 <!-- Favicon (inline SVG — pink "c" mark) -->
@@ -42,7 +42,7 @@
   "@type": "SportsClub",
   "name": "cirqle Run Club",
   "alternateName": "lecirqle",
-  "description": "Run Club aus Hannover. Jeden Sonntag um den Maschsee.",
+  "description": "Run Club aus Hannover. Jede Woche laufen, alle Paces willkommen.",
   "url": "https://lecirqle.de/",
   "sameAs": ["https://instagram.com/lecirqle"],
   "address": {
@@ -109,9 +109,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
-<!-- Leaflet for real map -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <style>
 /* ============================================
@@ -761,6 +758,45 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; gap: 12px; }
 }
 
+/* ===== NEXT RUN — Countdown / Stay-tuned / Kollabs ===== */
+.run-countdown { display: flex; gap: 10px; margin: 18px 0 6px; }
+.rc-unit { flex: 1; background: var(--surface-strong); border: 1px solid var(--border); border-radius: 14px; padding: 12px 4px; text-align: center; }
+.rc-num { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600; color: var(--text); line-height: 1; }
+.rc-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--text-mute); margin-top: 6px; text-transform: uppercase; }
+
+.staytuned { text-align: center; padding: 20px 8px 8px; }
+.st-pulse { width: 14px; height: 14px; border-radius: 50%; background: var(--pink); margin: 0 auto 16px; box-shadow: 0 0 0 0 var(--glow); animation: stPulse 2s infinite; }
+@keyframes stPulse { 0% { box-shadow: 0 0 0 0 rgba(255,62,165,.5); } 70% { box-shadow: 0 0 0 16px rgba(255,62,165,0); } 100% { box-shadow: 0 0 0 0 rgba(255,62,165,0); } }
+.st-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--pink); text-transform: uppercase; }
+.st-title { font-size: clamp(26px, 4vw, 40px); margin: 14px 0 12px; line-height: 1.05; }
+.st-sub { color: var(--text-mute); font-size: 15px; line-height: 1.6; max-width: 460px; margin: 0 auto 24px; }
+
+.collabs { margin-top: 28px; }
+.collabs-head { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-mute); text-transform: uppercase; margin-bottom: 14px; }
+.collabs-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.collab { display: flex; flex-direction: column; gap: 3px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 18px; transition: transform .2s, border-color .2s; }
+.collab:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.collab .c-name { font-weight: 800; font-size: 15px; color: var(--text); }
+.collab .c-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .5px; color: var(--text-mute); }
+.collabs-note { font-size: 12px; color: var(--text-dim); margin-top: 12px; }
+[data-theme="light"] .collab { background: rgba(0,0,0,0.02); }
+[data-theme="light"] .rc-unit { background: rgba(0,0,0,0.03); }
+
+/* Pace-Gruppen + Erklärung */
+.pace-groups { margin-top: 28px; }
+.pg-head { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-mute); text-transform: uppercase; margin-bottom: 14px; }
+.pg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .pg-row { grid-template-columns: 1fr; } }
+.pg-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; transition: border-color .2s; }
+.pg-card:hover { border-color: var(--border-strong); }
+.pg-pace { font-family: 'IBM Plex Mono', monospace; font-size: 26px; font-weight: 600; color: var(--pink); line-height: 1; }
+.pg-pace span { font-size: 13px; color: var(--text-mute); margin-left: 4px; }
+.pg-name { font-weight: 800; font-size: 15px; margin: 8px 0 6px; color: var(--text); }
+.pg-desc { font-size: 13px; line-height: 1.55; color: var(--text-mute); }
+.pg-explain { margin-top: 14px; background: var(--glow-soft); border: 1px solid rgba(255,62,165,.2); border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.6; color: var(--text); }
+.pg-explain strong { color: var(--pink); }
+[data-theme="light"] .pg-card { background: rgba(0,0,0,0.02); }
+
 /* ===== EVENT GALLERY (event-based, curated grid + lightbox) ===== */
 .gallery-grid[hidden] { display: none !important; }
 .ev-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -940,17 +976,15 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
    MANIFESTO (scroll-pinned text)
 ============================================ */
 .manifesto {
-  height: 130vh;
   position: relative;
 }
 .manifesto-inner {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: relative;
+  min-height: 62vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 32px;
+  padding: 16vh 32px;
   overflow: hidden;
 }
 .manifesto-orb {
@@ -1266,382 +1300,6 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   background: var(--pink);
   border-color: var(--pink);
   box-shadow: 0 0 30px var(--glow);
-}
-
-/* ============================================
-   ROUTE SECTION — 2D SVG MAP (Strava-style)
-============================================ */
-.route-section {
-  padding: 120px 32px;
-  position: relative;
-}
-.route-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-}
-@media (max-width: 900px) {
-  .route-grid { grid-template-columns: 1fr; gap: 48px; }
-  .route-section { padding: 80px 20px; }
-}
-.route-info h2 {
-  font-size: clamp(36px, 5.5vw, 72px);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 16px;
-}
-.route-info h2 .script {
-  color: var(--pink);
-  font-weight: 400;
-  font-size: 1.05em;
-  text-shadow: 0 0 40px var(--glow-soft);
-}
-.route-info .lead {
-  color: var(--text-mute);
-  font-size: 17px;
-  max-width: 420px;
-  margin-bottom: 32px;
-  line-height: 1.6;
-}
-.route-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  max-width: 420px;
-  margin-bottom: 32px;
-}
-.route-stat {
-  padding: 18px 20px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-}
-[data-theme="light"] .route-stat {
-  background: rgba(0,0,0,0.03);
-  border-color: rgba(0,0,0,0.06);
-}
-.route-stat .rs-num {
-  font-family: 'Pacifico', cursive;
-  font-size: 36px;
-  color: var(--pink);
-  line-height: 1;
-  text-shadow: 0 0 30px var(--glow-soft);
-}
-.route-stat .rs-lbl {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-mute);
-  margin-top: 8px;
-}
-.route-waypoint-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  color: var(--text-mute);
-}
-.route-waypoint-list .wp {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 0;
-  transition: color .3s, opacity .3s;
-  opacity: 0.5;
-}
-.route-waypoint-list .wp.active { opacity: 1; color: var(--text); }
-.route-waypoint-list .wp .wp-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,62,165,0.3);
-  transition: all .3s;
-  flex-shrink: 0;
-}
-.route-waypoint-list .wp.active .wp-dot {
-  background: var(--pink);
-  box-shadow: 0 0 12px var(--pink);
-  transform: scale(1.4);
-}
-.route-waypoint-list .wp .wp-km {
-  font-size: 10px;
-  color: var(--text-dim);
-  margin-left: auto;
-}
-
-/* The SVG map card */
-.route-map-card {
-  position: relative;
-  background: linear-gradient(160deg, #0a0a14 0%, #1a0d20 100%);
-  border: 1px solid rgba(255,62,165,0.15);
-  border-radius: 32px;
-  padding: 40px 28px 32px;
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
-}
-[data-theme="light"] .route-map-card {
-  /* keep dark even in light mode — cinematic island */
-  background: linear-gradient(160deg, #0a0a14 0%, #1a0d20 100%);
-  border-color: rgba(255,62,165,0.25);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
-}
-.route-map-card::before {
-  content: '';
-  position: absolute;
-  top: -100px; right: -100px;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,62,165,0.18), transparent 70%);
-  pointer-events: none;
-}
-.route-map-card::after {
-  content: '';
-  position: absolute;
-  bottom: -100px; left: -100px;
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(97,51,255,0.12), transparent 70%);
-  pointer-events: none;
-}
-
-.route-map-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 1;
-}
-.route-map-header .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  padding: 6px 12px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 999px;
-}
-.route-map-header .badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--pink);
-  box-shadow: 0 0 8px var(--pink);
-  animation: pulse 2s infinite;
-}
-.route-map-header .distance {
-  font-family: 'Pacifico', cursive;
-  font-size: 28px;
-  color: white;
-  filter: drop-shadow(0 0 12px rgba(255,62,165,0.4));
-}
-.route-map-header .distance .unit { font-size: 14px; opacity: 0.6; margin-left: 4px; }
-
-.route-svg-wrap {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  margin: 0 auto;
-}
-.route-svg {
-  width: 100%;
-  height: auto;
-  max-height: 60vh;
-  display: block;
-  filter: drop-shadow(0 0 20px rgba(255,62,165,0.2));
-}
-
-/* === Leaflet map container === */
-.leaflet-map {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 560px;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #0a0a14;
-  border: 1px solid rgba(255,62,165,0.15);
-}
-@media (max-width: 900px) { .leaflet-map { height: 460px; } }
-.leaflet-container { background: #0a0a14 !important; }
-/* Hide Leaflet attribution */
-.leaflet-control-attribution { display: none !important; }
-/* Pink route polyline */
-.leaflet-overlay-pane path.route-outer-glow { stroke: #ff3ea5; stroke-width: 18; opacity: 0.15; filter: blur(2px); }
-.leaflet-overlay-pane path.route-mid-glow { stroke: #ff3ea5; stroke-width: 10; opacity: 0.35; }
-.leaflet-overlay-pane path.route-main { stroke: #ff77c2; stroke-width: 4; filter: drop-shadow(0 0 8px #ff3ea5); }
-
-/* Custom map markers */
-.map-marker-start {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--pink);
-  border: 3px solid white;
-  box-shadow: 0 0 0 4px rgba(255,62,165,0.2), 0 0 20px var(--pink);
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-weight: 800; font-size: 14px;
-  animation: pulse 2s infinite;
-}
-.map-marker-runner {
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: white;
-  border: 3px solid var(--pink);
-  box-shadow: 0 0 0 4px rgba(255,62,165,0.3), 0 0 20px var(--pink), 0 0 30px rgba(255,62,165,0.5);
-}
-.map-marker-wp {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: rgba(255,62,165,0.9);
-  border: 2px solid white;
-  box-shadow: 0 0 8px var(--pink);
-}
-.map-tooltip {
-  background: rgba(10,10,20,0.9);
-  border: 1px solid rgba(255,62,165,0.3);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  backdrop-filter: blur(8px);
-}
-.leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before { display: none; }
-.leaflet-tooltip { background: transparent; border: none; box-shadow: none; padding: 0; }
-/* Background dot grid inside the SVG card */
-.route-svg-bg {
-  fill: rgba(255,255,255,0.04);
-}
-/* Maschsee water silhouette */
-.route-water {
-  fill: rgba(80,140,200,0.15);
-  stroke: rgba(80,140,200,0.3);
-  stroke-width: 1;
-}
-.route-water-label {
-  fill: rgba(255,255,255,0.25);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-/* The actual route line — layered for glow */
-.route-line-glow {
-  fill: none;
-  stroke: var(--pink);
-  stroke-width: 14;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.15;
-  filter: blur(4px);
-}
-.route-line-mid {
-  fill: none;
-  stroke: var(--pink);
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.3;
-}
-.route-line {
-  fill: none;
-  stroke: url(#routeGrad);
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.route-line-progress {
-  fill: none;
-  stroke: white;
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px white) drop-shadow(0 0 12px var(--pink));
-}
-/* Start / end marker */
-.route-marker-start-glow {
-  fill: var(--pink);
-  opacity: 0.3;
-}
-.route-marker-start {
-  fill: var(--pink);
-  stroke: white;
-  stroke-width: 2;
-  filter: drop-shadow(0 0 8px var(--pink));
-}
-.route-marker-label {
-  fill: white;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-}
-.route-marker-label-bg {
-  fill: rgba(0,0,0,0.7);
-  stroke: rgba(255,62,165,0.4);
-  stroke-width: 1;
-  rx: 6;
-}
-/* Waypoint circles */
-.route-wp-dot {
-  fill: rgba(255,255,255,0.85);
-  stroke: var(--pink);
-  stroke-width: 2;
-}
-/* Runner */
-.route-runner-glow {
-  fill: var(--pink);
-  opacity: 0.5;
-  filter: blur(4px);
-}
-.route-runner {
-  fill: white;
-  stroke: var(--pink);
-  stroke-width: 2.5;
-  filter: drop-shadow(0 0 8px var(--pink));
-}
-
-/* Bottom progress bar inside the card */
-.route-map-progress {
-  margin-top: 20px;
-  position: relative;
-  z-index: 1;
-}
-.route-map-progress .rmp-meta {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 8px;
-}
-.route-map-progress .rmp-bar {
-  height: 3px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.route-map-progress .rmp-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--pink), #ff77c2);
-  width: 0%;
-  border-radius: 999px;
-  box-shadow: 0 0 10px var(--pink);
-  transition: width 0.1s linear;
 }
 
 /* ============================================
@@ -2308,20 +1966,6 @@ footer {
 [data-theme="light"] .g-item.placeholder .ph-label { color: var(--text-dim); }
 [data-theme="light"] .gallery-header .gh-meta { color: var(--text-mute); }
 
-/* Route — KEEP dark because the 3D scene is designed for dark */
-[data-theme="light"] .route-pin {
-  background: #04040a;
-}
-[data-theme="light"] .route-overlay,
-[data-theme="light"] .route-top .route-title,
-[data-theme="light"] .route-waypoint .wp-val { color: white; }
-[data-theme="light"] .route-top .rs .rs-lbl,
-[data-theme="light"] .route-progress .rp-label,
-[data-theme="light"] .route-waypoint .wp-lbl { color: rgba(255,255,255,0.6); }
-[data-theme="light"] .route-waypoint {
-  background: rgba(10,10,20,0.7);
-  border-color: rgba(255,255,255,0.15);
-}
 
 /* Vibes / Glass cards — bleiben dunkel, der "Premium-Card-Inseln"-Look */
 /* (Light-Mode overrides für glass-card sind weiter unten beim Card-Design) */
@@ -2568,22 +2212,6 @@ body, nav, .event-card, .glass-card, .modal, footer,
   .g-2, .g-4, .g-5, .g-7, .g-8, .g-9, .g-10, .g-12 { grid-column: span 1; grid-row: span 1; }
   .g-item .caption { padding: 12px; font-size: 12px; }
 
-  /* ROUTE */
-  .route-section { padding: 60px 18px; }
-  .route-grid { grid-template-columns: 1fr; gap: 32px; }
-  .route-info h2 { font-size: 36px; }
-  .route-info .lead { font-size: 14px; margin-bottom: 24px; }
-  .route-stats-grid { gap: 8px; max-width: 100%; }
-  .route-stat { padding: 14px 16px; }
-  .route-stat .rs-num { font-size: 28px; }
-  .route-stat .rs-lbl { font-size: 9px; }
-  .route-waypoint-list { font-size: 11px; }
-  .route-waypoint-list .wp .wp-km { font-size: 9px; }
-  .leaflet-map { height: 360px; border-radius: 16px; }
-  .route-map-card { padding: 24px 18px 20px; border-radius: 24px; }
-  .route-map-header .distance { font-size: 22px; }
-  .route-map-header .badge { font-size: 9px; letter-spacing: 1.5px; padding: 4px 10px; }
-  .route-map-progress .rmp-meta { font-size: 9px; flex-wrap: wrap; gap: 6px; }
 
   /* VIBES (Spotify + Instagram cards) */
   .vibes { padding: 60px 18px; }
@@ -2663,7 +2291,6 @@ body, nav, .event-card, .glass-card, .modal, footer,
   .hero-svg-logo { width: 75vw; }
   .events-header h2,
   .gallery-header h2,
-  .route-info h2,
   .faq-side h2 { font-size: 28px; }
   .manifesto-text { font-size: 24px; }
   .cta-final h2 { font-size: 44px; }
@@ -2727,7 +2354,6 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <ul>
     <li><a href="#events" data-hover>Events</a></li>
     <li><a href="#gallery" data-hover>Gallery</a></li>
-    <li><a href="#route" data-hover>Strecke</a></li>
     <li><a href="#vibes" data-hover>Vibes</a></li>
     <li><a href="#faq" data-hover>FAQ</a></li>
   </ul>
@@ -2759,7 +2385,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <div class="hero-inner">
     <div class="hero-status">
       <span class="live"></span>
-      <span>Next run · So 07.06 · 10:00 · CODOS</span>
+      <span id="heroNextRun">Next run · Termin folgt · Stay tuned</span>
     </div>
     <h1 id="heroTitle">
       <svg class="hero-svg-logo" id="heroLogoSvg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-label="cirqle">
@@ -2778,10 +2404,10 @@ body, nav, .event-card, .glass-card, .modal, footer,
       <span class="word">meet.</span>
       <span class="word"><span class="dot">connect.</span></span>
     </p>
-    <p class="hero-sub">Der Run Club aus Hannover für alle, die sich beim Laufen lieber connecten als alleine schwitzen. Jeden Sonntag. Alle Paces willkommen.</p>
+    <p class="hero-sub">Der Run Club aus Hannover für alle, die sich beim Laufen lieber connecten als alleine schwitzen. Jede Woche. Alle Paces willkommen.</p>
     <div class="hero-ctas">
       <a href="#events" class="btn btn-primary" data-hover>Jetzt anmelden <span class="arrow">→</span></a>
-      <a href="#route" class="btn btn-ghost" data-hover>Strecke ansehen</a>
+      <a href="#gallery" class="btn btn-ghost" data-hover>Fotos ansehen</a>
     </div>
     <div class="hero-stats">
       <div class="stat-item">
@@ -2793,8 +2419,8 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <div class="stat-label">Runs gelaufen</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">8,3<span style="font-size:0.5em">km</span></div>
-        <div class="stat-label">Maschsee Loop</div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Pace-Gruppen</div>
       </div>
     </div>
   </div>
@@ -2811,7 +2437,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <span>@lecirqle · Hannover</span>
   </div>
   <div class="marquee-track">
-    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">cirqle Run Day</div></div>
     <div class="m-photo"><img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
     <div class="m-photo"><img src="photos/events/2026-05-17/thumb/010.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
     <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/070.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
@@ -2819,7 +2445,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/110.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Linden Tunnel</div></div>
     <div class="m-photo"><img src="photos/events/2026-06-07/thumb/020.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Hannover Mitte</div></div>
     <!-- Duplicate for seamless loop -->
-    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Sunday Run · 05/26</div></div>
+    <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">cirqle Run Day</div></div>
     <div class="m-photo"><img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Maschsee</div></div>
     <div class="m-photo"><img src="photos/events/2026-05-17/thumb/010.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">After Run</div></div>
     <div class="m-photo"><img src="photos/events/2026-06-03-redbull/thumb/070.jpg" alt="cirqle run" onerror="this.style.display='none';this.parentElement.classList.add('placeholder')"><div class="ph-tag">Crew</div></div>
@@ -2860,12 +2486,13 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="events-header">
       <div>
         <div class="eyebrow">Was kommt · Nächster Run</div>
-        <h2>Sunday <span class="script">Run.</span><br>Save the date.</h2>
+        <h2>cirqle Run <span class="script">Day.</span><br>Save the date.</h2>
       </div>
       <div class="events-meta">→ Anmeldung sichert dir dein Goodie</div>
     </div>
 
-    <div class="event-grid single">
+    <div class="event-grid single" id="nextRunGrid">
+      <!-- Wird per JS aus NEXT_RUN gerendert (Countdown oder Stay-tuned). Fallback unten: -->
       <div class="event-card" data-tilt>
         <div class="ec-glow"></div>
         <div class="event-date-block">
@@ -2875,16 +2502,10 @@ body, nav, .event-card, .glass-card, .modal, footer,
           </div>
           <span class="event-tag">Next Run</span>
         </div>
-        <h3>Sunday Run · CODOS</h3>
+        <h3>cirqle Run Day</h3>
         <div class="event-info">
-          <div class="row"><span class="key">Start</span> CODOS Hannover · 10:00</div>
-          <div class="row"><span class="key">Distanz</span> 8,3 km · Maschsee Loop</div>
-          <div class="row"><span class="key">Pace</span>
-            <div class="paces">
-              <span class="pace-tag">7:00 min/km</span>
-              <span class="pace-tag">6:00 min/km</span>
-            </div>
-          </div>
+          <div class="row"><span class="key">Start</span> Start &amp; Uhrzeit folgen</div>
+          <div class="row"><span class="key">Distanz</span> Strecke variiert je nach Run</div>
         </div>
         <div class="event-voucher">
           <div class="v-ico">☕</div>
@@ -2897,10 +2518,38 @@ body, nav, .event-card, .glass-card, .modal, footer,
           </div>
           <div class="cap-bar"><div class="cap-fill" id="capFill" data-target="63"></div></div>
         </div>
-        <button class="event-signup" data-hover onclick="openSignup('Sunday Run · CODOS', '07. Juni 2026', 'CODOS-KAFFEE', 'Gratis Filterkaffee bei CODOS')">
+        <button class="event-signup" data-hover onclick="openSignup('cirqle Run Day', '07. Juni 2026', 'CODOS-KAFFEE', 'Gratis Filterkaffee bei CODOS')">
           Anmelden <span>→</span>
         </button>
       </div>
+    </div>
+    <!-- Pace-Gruppen + Erklärung (Pace = min/km, für Einsteiger:innen) -->
+    <div class="pace-groups">
+      <div class="pg-head">Zwei Pace-Gruppen · für jedes Level</div>
+      <div class="pg-row">
+        <div class="pg-card">
+          <div class="pg-pace">7:00 <span>min/km</span></div>
+          <div class="pg-name">Chill &amp; Talk</div>
+          <div class="pg-desc">Locker — du kannst dich beim Laufen unterhalten. Etwa 8,5 km/h, 5 km in ~35 Min. Ideal für Einsteiger:innen.</div>
+        </div>
+        <div class="pg-card">
+          <div class="pg-pace">6:00 <span>min/km</span></div>
+          <div class="pg-name">Steady</div>
+          <div class="pg-desc">Zügig, aber machbar. Etwa 10 km/h, 5 km in ~30 Min. Für alle mit etwas Lauf-Erfahrung.</div>
+        </div>
+      </div>
+      <div class="pg-explain"><strong>Was heißt „Pace"?</strong> Das sind die Minuten, die du für einen Kilometer brauchst — 7:00 min/km heißt 7 Minuten pro Kilometer. Keine Sorge: Du entscheidest vor Ort, welche Gruppe passt, und wechseln ist jederzeit ok. Alle Paces willkommen.</div>
+    </div>
+
+    <!-- Vergangene Runs & Kollabs (bewusst nicht als feste Partner formuliert) -->
+    <div class="collabs">
+      <div class="collabs-head">Wo wir schon waren · Kollabs & Spots</div>
+      <div class="collabs-row">
+        <div class="collab"><span class="c-name">Red Bull</span><span class="c-tag">Special Edition Run</span></div>
+        <div class="collab"><span class="c-name">Bestia</span><span class="c-tag">After-Run Pizza</span></div>
+        <div class="collab"><span class="c-name">CODOS</span><span class="c-tag">Run-Start & Kaffee</span></div>
+      </div>
+      <div class="collabs-note">Eine Auswahl bisheriger Runs & Kollabs — keine festen Partnerschaften, einfach gute Vibes.</div>
     </div>
   </div>
 </section>
@@ -2911,7 +2560,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="gallery-header">
       <div>
         <div class="eyebrow">Pictures · Vibes · Moments</div>
-        <h2>So sieht ein<br><span class="script">cirqle Sunday</span> aus.</h2>
+        <h2>So sieht ein<br><span class="script">cirqle Run Day</span> aus.</h2>
       </div>
       <div class="gh-meta">→ Mehr auf @lecirqle</div>
     </div>
@@ -2921,7 +2570,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
       <div class="gallery-grid" hidden aria-hidden="true">
       <div class="g-item g-1" data-tilt-soft>
         <img src="photos/events/2026-06-03-redbull/thumb/001.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>cirqle</div><div class=&quot;ph-label&quot;>photo-1.jpg</div>'">
-        <div class="caption">The boombox crew<span class="cap-sub">Sunday Run · CODOS</span></div>
+        <div class="caption">The boombox crew<span class="cap-sub">cirqle Run Day</span></div>
       </div>
       <div class="g-item g-2" data-tilt-soft>
         <img src="photos/events/2026-06-07/thumb/005.jpg" alt="cirqle moment" onerror="this.style.display='none';this.parentElement.classList.add('placeholder');this.parentElement.innerHTML+='<div class=&quot;ph-icon&quot;>✦</div><div class=&quot;ph-label&quot;>photo-2.jpg</div>'">
@@ -2972,65 +2621,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
   </div>
 </section>
 
-<!-- ROUTE — 2D SVG Map -->
-<section class="route-section" id="route">
-  <div class="route-grid">
-    <!-- Left: info -->
-    <div class="route-info">
-      <div class="eyebrow">Die Strecke</div>
-      <h2>Vom CODOS<br>um den <span class="script">Maschsee.</span></h2>
-      <p class="lead">8,3 km Loop ab CODOS Hannover — runter zum Maschsee, einmal rum, zurück über Südstadt. Flach, easy, mit Wasserblick.</p>
-
-      <div class="route-stats-grid">
-        <div class="route-stat">
-          <div class="rs-num">8,3</div>
-          <div class="rs-lbl">Kilometer</div>
-        </div>
-        <div class="route-stat">
-          <div class="rs-num">~12</div>
-          <div class="rs-lbl">Höhenmeter</div>
-        </div>
-        <div class="route-stat">
-          <div class="rs-num">100%</div>
-          <div class="rs-lbl">Asphalt</div>
-        </div>
-        <div class="route-stat">
-          <div class="rs-num">10:00</div>
-          <div class="rs-lbl">Start Sonntag</div>
-        </div>
-      </div>
-
-      <div class="route-waypoint-list" id="wpList">
-        <div class="wp" data-t="0.00"><span class="wp-dot"></span><span class="wp-name">CODOS Start</span><span class="wp-km">0,0 km</span></div>
-        <div class="wp" data-t="0.20"><span class="wp-dot"></span><span class="wp-name">Leibnizufer</span><span class="wp-km">~1,7 km</span></div>
-        <div class="wp" data-t="0.40"><span class="wp-dot"></span><span class="wp-name">Maschsee Westufer</span><span class="wp-km">~3,3 km</span></div>
-        <div class="wp" data-t="0.55"><span class="wp-dot"></span><span class="wp-name">Maschsee Südspitze</span><span class="wp-km">~4,5 km</span></div>
-        <div class="wp" data-t="0.75"><span class="wp-dot"></span><span class="wp-name">Maschsee Ostufer</span><span class="wp-km">~6,2 km</span></div>
-        <div class="wp" data-t="0.95"><span class="wp-dot"></span><span class="wp-name">Bult / Südstadt</span><span class="wp-km">~7,9 km</span></div>
-        <div class="wp" data-t="1.00"><span class="wp-dot"></span><span class="wp-name">CODOS Ziel</span><span class="wp-km">8,3 km</span></div>
-      </div>
-    </div>
-
-    <!-- Right: SVG map card -->
-    <div class="route-map-card">
-      <div class="route-map-header">
-        <div class="badge">Live Route · GPX</div>
-        <div class="distance">8,3<span class="unit">km</span></div>
-      </div>
-
-      <div class="leaflet-map" id="leafletMap"></div>
-
-      <div class="route-map-progress">
-        <div class="rmp-meta">
-          <span>Start · CODOS</span>
-          <span id="rmpCurrent">→ CODOS Start</span>
-          <span>Ziel · CODOS</span>
-        </div>
-        <div class="rmp-bar"><div class="rmp-fill" id="rmpFill"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ROUTE-Sektion entfernt — Strecke wechselt wöchentlich (kein fixer Maschsee-Loop mehr) -->
 
 <!-- VIBES -->
 <section class="vibes" id="vibes">
@@ -3044,7 +2635,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="vibes-grid">
       <div class="glass-card">
         <h3>Run Playlist</h3>
-        <p class="glass-sub">2 Stunden Hannover Beats — kuratiert für unsere Sunday Runs auf Spotify.</p>
+        <p class="glass-sub">2 Stunden Hannover Beats — kuratiert für unsere cirqle Run Days auf Spotify.</p>
         <div class="spotify-frame">
           <iframe src="https://open.spotify.com/embed/playlist/2WJRfUJqFXMqG68eO3zvWh?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         </div>
@@ -3117,7 +2708,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
 <!-- FINAL CTA -->
 <section class="cta-final">
   <div class="cta-final-inner">
-    <h2>see you sunday?</h2>
+    <h2>see you soon?</h2>
     <p>Reservier dir deinen Platz beim nächsten cirqle Run und sichere dir deinen Voucher.</p>
     <a href="#events" class="btn btn-primary" data-hover>
       Jetzt anmelden <span class="arrow">→</span>
@@ -3130,7 +2721,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="brand">cirqle</div>
-      <p>run. meet. connect. — der Run Club aus Hannover. Jeden Sonntag. Community first.</p>
+      <p>run. meet. connect. — der Run Club aus Hannover. Jede Woche. Community first.</p>
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
@@ -3141,7 +2732,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div class="footer-col">
       <h4>Runs</h4>
       <a href="#events" data-hover>Nächste Events</a>
-      <a href="#route" data-hover>Strecke</a>
+      <a href="#gallery" data-hover>Gallery</a>
       <a href="#vibes" data-hover>Playlist</a>
     </div>
     <div class="footer-col">
@@ -3155,6 +2746,36 @@ body, nav, .event-card, .glass-card, .modal, footer,
     <div>BUILT WITH 💗 FOR THE COMMUNITY</div>
   </div>
 </footer>
+
+<!-- NOTIFY MODAL (Stay tuned) -->
+<div class="modal-bg" id="notifyModal">
+  <div class="modal">
+    <button class="modal-close" data-hover onclick="closeNotify()">✕</button>
+    <div id="notifyForm">
+      <h3><span class="script">Stay tuned.</span></h3>
+      <div class="modal-sub">Trag dich ein — wir schreiben dir, sobald der nächste Run steht.</div>
+      <form onsubmit="return submitNotify(event)">
+        <label>Name</label>
+        <input id="notifyName" type="text" required placeholder="Max Mustermann">
+        <label>E-Mail</label>
+        <input id="notifyEmail" type="email" required placeholder="du@email.de">
+        <label class="modal-checkbox">
+          <input type="checkbox" required>
+          Ich möchte über kommende cirqle Runs benachrichtigt werden
+        </label>
+        <button type="submit" class="submit-btn" data-hover>Auf die Liste <span>→</span></button>
+      </form>
+    </div>
+    <div id="notifyDone" style="display: none;">
+      <div class="success-state">
+        <div class="check">✦</div>
+        <h3 style="font-family: 'Pacifico', cursive; font-weight: 400; color: var(--pink); font-size: 36px;">Du bist auf der Liste!</h3>
+        <div class="modal-sub">Wir melden uns, sobald der nächste Run steht. 💗</div>
+        <button class="submit-btn" data-hover onclick="closeNotify()" style="margin-top: 20px;">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="signupModal">
@@ -3179,7 +2800,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
         <select required>
           <option value="">— wählen —</option>
           <option>5 km</option>
-          <option>8,3 km (Maschsee Loop)</option>
+          <option>~8 km</option>
           <option>10 km</option>
         </select>
         <label class="modal-checkbox">
@@ -3193,7 +2814,7 @@ body, nav, .event-card, .glass-card, .modal, footer,
       <div class="success-state">
         <div class="check">✦</div>
         <h3 style="font-family: 'Pacifico', cursive; font-weight: 400; color: var(--pink); font-size: 36px;">Du bist drin!</h3>
-        <div class="modal-sub">See you sunday</div>
+        <div class="modal-sub">See you soon</div>
         <div class="voucher-card">
           <div class="v-label">Dein cirqle Voucher</div>
           <div class="v-code" id="voucherCode">—</div>
@@ -3552,8 +3173,7 @@ function initSite() {
 
   // Init 3D scenes
   initHero3D();
-  // initRoute3D() replaced by initRoute2D
-  initRoute2D();
+  // Route-Sektion entfernt (Strecke variiert) — initRoute2D() nicht mehr aufgerufen
 
   // Init cursor
   initCursor();
@@ -3695,481 +3315,6 @@ function initHero3D() {
   });
 }
 
-/* ============================================
-   ROUTE — Real Leaflet map (Hannover streets + Maschsee)
-============================================ */
-function initRoute2D() {
-  const mapEl = document.getElementById('leafletMap');
-  if (!mapEl || typeof L === 'undefined') return;
-
-  // Actual GPS route
-  const rawRoute = [
-    [52.3700, 9.7345], [52.3685, 9.7340], [52.3670, 9.7335], [52.3650, 9.7335],
-    [52.3625, 9.7340], [52.3605, 9.7350], [52.3590, 9.7380], [52.3580, 9.7400],
-    [52.3560, 9.7400], [52.3540, 9.7395], [52.3520, 9.7395], [52.3500, 9.7395],
-    [52.3480, 9.7405], [52.3465, 9.7425], [52.3455, 9.7450], [52.3458, 9.7475],
-    [52.3470, 9.7490], [52.3490, 9.7495], [52.3510, 9.7495], [52.3530, 9.7490],
-    [52.3550, 9.7485], [52.3570, 9.7475], [52.3585, 9.7460], [52.3600, 9.7445],
-    [52.3620, 9.7430], [52.3640, 9.7410], [52.3660, 9.7390], [52.3680, 9.7365],
-    [52.3695, 9.7350], [52.3700, 9.7345]
-  ];
-
-  const bounds = L.latLngBounds(rawRoute);
-  const map = L.map(mapEl, {
-    zoomControl: false,
-    attributionControl: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: true,
-    dragging: true,
-    zoomSnap: 0.25
-  });
-  map.fitBounds(bounds, { padding: [40, 40] });
-
-  // Dark themed tiles from CartoDB
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd'
-  }).addTo(map);
-
-  // Route polyline — 3 layers for glow effect
-  L.polyline(rawRoute, { color: '#ff3ea5', weight: 18, opacity: 0.15, lineCap: 'round', lineJoin: 'round', className: 'route-outer-glow' }).addTo(map);
-  L.polyline(rawRoute, { color: '#ff3ea5', weight: 10, opacity: 0.35, lineCap: 'round', lineJoin: 'round', className: 'route-mid-glow' }).addTo(map);
-  L.polyline(rawRoute, { color: '#ff77c2', weight: 4, opacity: 1, lineCap: 'round', lineJoin: 'round', className: 'route-main' }).addTo(map);
-
-  // Start/Finish marker
-  const startIcon = L.divIcon({
-    html: '<div class="map-marker-start">✦</div>',
-    iconSize: [32, 32], iconAnchor: [16, 16], className: ''
-  });
-  L.marker(rawRoute[0], { icon: startIcon, zIndexOffset: 1000 })
-    .addTo(map)
-    .bindTooltip('Start · Ziel · CODOS', { permanent: false, direction: 'right', offset: [16, 0], className: 'map-tooltip' });
-
-  // Waypoint markers (compute by walking through route)
-  // Compute cumulative distances for the route
-  function segmentDistances(coords) {
-    const dists = [0];
-    let total = 0;
-    for (let i = 0; i < coords.length - 1; i++) {
-      const dx = coords[i+1][1] - coords[i][1];
-      const dy = coords[i+1][0] - coords[i][0];
-      const d = Math.sqrt(dx*dx + dy*dy);
-      total += d;
-      dists.push(total);
-    }
-    return { dists, total };
-  }
-  const { dists, total } = segmentDistances(rawRoute);
-
-  function pointAtRatio(ratio) {
-    if (ratio <= 0) return rawRoute[0];
-    if (ratio >= 1) return rawRoute[rawRoute.length - 1];
-    const target = ratio * total;
-    for (let i = 0; i < dists.length - 1; i++) {
-      if (dists[i+1] >= target) {
-        const local = (target - dists[i]) / (dists[i+1] - dists[i]);
-        const lat = rawRoute[i][0] + (rawRoute[i+1][0] - rawRoute[i][0]) * local;
-        const lng = rawRoute[i][1] + (rawRoute[i+1][1] - rawRoute[i][1]) * local;
-        return [lat, lng];
-      }
-    }
-    return rawRoute[rawRoute.length - 1];
-  }
-
-  const waypoints = [
-    { t: 0.20, label: 'Leibnizufer' },
-    { t: 0.40, label: 'Maschsee Westufer' },
-    { t: 0.55, label: 'Maschsee Südspitze' },
-    { t: 0.75, label: 'Maschsee Ostufer' },
-    { t: 0.95, label: 'Bult / Südstadt' },
-  ];
-  waypoints.forEach(wp => {
-    const wpIcon = L.divIcon({ html: '<div class="map-marker-wp"></div>', iconSize: [12,12], iconAnchor: [6,6], className: '' });
-    L.marker(pointAtRatio(wp.t), { icon: wpIcon })
-      .addTo(map)
-      .bindTooltip(wp.label, { permanent: false, direction: 'top', offset: [0, -8], className: 'map-tooltip' });
-  });
-
-  // Runner marker (moves with scroll)
-  const runnerIcon = L.divIcon({
-    html: '<div class="map-marker-runner"></div>',
-    iconSize: [18, 18], iconAnchor: [9, 9], className: ''
-  });
-  const runner = L.marker(rawRoute[0], { icon: runnerIcon, zIndexOffset: 2000, interactive: false }).addTo(map);
-
-  const rmpFill = document.getElementById('rmpFill');
-  const rmpCurrent = document.getElementById('rmpCurrent');
-  const wpListItems = document.querySelectorAll('#wpList .wp');
-
-  function setProgress(p) {
-    p = Math.max(0, Math.min(1, p));
-    const pos = pointAtRatio(p);
-    runner.setLatLng(pos);
-    if (rmpFill) rmpFill.style.width = (p * 100) + '%';
-    const labels = [
-      { t: 0.0, label: '→ CODOS Start' },
-      { t: 0.20, label: '→ Leibnizufer' },
-      { t: 0.40, label: '→ Maschsee Westufer' },
-      { t: 0.55, label: '→ Maschsee Südspitze' },
-      { t: 0.75, label: '→ Maschsee Ostufer' },
-      { t: 0.95, label: '→ Bult / Südstadt' },
-      { t: 1.0, label: '→ CODOS Ziel' }
-    ];
-    const wp = [...labels].reverse().find(w => p >= w.t) || labels[0];
-    if (rmpCurrent) rmpCurrent.textContent = wp.label;
-    wpListItems.forEach(item => {
-      const itemT = parseFloat(item.dataset.t);
-      item.classList.toggle('active', p >= itemT - 0.05);
-    });
-  }
-  setProgress(0);
-
-  // Scroll-driven runner
-  ScrollTrigger.create({
-    trigger: '#route',
-    start: 'top 70%',
-    end: 'bottom 30%',
-    scrub: 0.6,
-    onUpdate: self => setProgress(self.progress)
-  });
-
-  // Fix Leaflet sizing once layout is settled
-  setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [40, 40] }); }, 200);
-  setTimeout(() => { map.invalidateSize(); map.fitBounds(bounds, { padding: [40, 40] }); }, 600);
-}
-
-/* ============================================
-   ROUTE 3D (legacy, no longer called)
-============================================ */
-function initRoute3D() {
-  const canvas = document.getElementById('routeCanvas');
-  // Use viewport size as a safe fallback when the sticky container hasn't laid out yet
-  let w = canvas.clientWidth || window.innerWidth;
-  let h = canvas.clientHeight || window.innerHeight;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(w, h, false);
-  renderer.setClearColor(0x000000, 0);
-
-  // Visibility check using getBoundingClientRect (more reliable than IO with Lenis)
-  function isCanvasVisible() {
-    const r = canvas.getBoundingClientRect();
-    return r.bottom > -300 && r.top < window.innerHeight + 300;
-  }
-
-  const scene = new THREE.Scene();
-  // Gentle fog so distant ambient particles fade — must be very low because
-  // the route is only ~200 units across.
-  scene.fog = new THREE.FogExp2(0x04040a, 0.0022);
-
-  const camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 2000);
-
-  // Real route coords [lat, lng]
-  const rawRoute = [
-    [52.3700, 9.7345], [52.3685, 9.7340], [52.3670, 9.7335], [52.3650, 9.7335],
-    [52.3625, 9.7340], [52.3605, 9.7350], [52.3590, 9.7380], [52.3580, 9.7400],
-    [52.3560, 9.7400], [52.3540, 9.7395], [52.3520, 9.7395], [52.3500, 9.7395],
-    [52.3480, 9.7405], [52.3465, 9.7425], [52.3455, 9.7450], [52.3458, 9.7475],
-    [52.3470, 9.7490], [52.3490, 9.7495], [52.3510, 9.7495], [52.3530, 9.7490],
-    [52.3550, 9.7485], [52.3570, 9.7475], [52.3585, 9.7460], [52.3600, 9.7445],
-    [52.3620, 9.7430], [52.3640, 9.7410], [52.3660, 9.7390], [52.3680, 9.7365],
-    [52.3695, 9.7350], [52.3700, 9.7345]
-  ];
-
-  // Convert lat/lng to local x/z
-  const centerLat = (Math.min(...rawRoute.map(r => r[0])) + Math.max(...rawRoute.map(r => r[0]))) / 2;
-  const centerLng = (Math.min(...rawRoute.map(r => r[1])) + Math.max(...rawRoute.map(r => r[1]))) / 2;
-  const scale = 8000;
-
-  const points3D = rawRoute.map(([lat, lng]) => {
-    const x = (lng - centerLng) * scale * Math.cos(centerLat * Math.PI / 180);
-    const z = -(lat - centerLat) * scale;
-    return new THREE.Vector3(x, 0, z);
-  });
-
-  // Smooth catmull curve
-  const curve = new THREE.CatmullRomCurve3(points3D, true, 'catmullrom', 0.3);
-
-  // === Floor: animated grid ===
-  const floorGeo = new THREE.PlaneGeometry(800, 800, 60, 60);
-  const floorMat = new THREE.MeshBasicMaterial({
-    color: 0x101018,
-    transparent: true,
-    opacity: 0.6,
-    side: THREE.DoubleSide,
-    wireframe: true
-  });
-  const floor = new THREE.Mesh(floorGeo, floorMat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -2;
-  scene.add(floor);
-
-  // Solid darker plane below grid
-  const floorSolid = new THREE.Mesh(
-    new THREE.PlaneGeometry(800, 800),
-    new THREE.MeshBasicMaterial({ color: 0x05050a, transparent: true, opacity: 0.8, side: THREE.DoubleSide })
-  );
-  floorSolid.rotation.x = -Math.PI / 2;
-  floorSolid.position.y = -2.5;
-  scene.add(floorSolid);
-
-  // === Route tube — main glowing line ===
-  // Layered tubes for glow effect — reduced segment count for perf
-  const TUBE_SEG = 200;
-  const tubeGeo1 = new THREE.TubeGeometry(curve, TUBE_SEG, 0.55, 8, true);
-  const tubeMat1 = new THREE.MeshBasicMaterial({ color: 0xff3ea5 });
-  const tube1 = new THREE.Mesh(tubeGeo1, tubeMat1);
-  tube1.position.y = 0.5;
-  scene.add(tube1);
-
-  // Outer glow tube
-  const tubeGeo2 = new THREE.TubeGeometry(curve, TUBE_SEG, 1.4, 8, true);
-  const tubeMat2 = new THREE.MeshBasicMaterial({ color: 0xff3ea5, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending, depthWrite: false });
-  const tube2 = new THREE.Mesh(tubeGeo2, tubeMat2);
-  tube2.position.y = 0.5;
-  scene.add(tube2);
-
-  // Even larger soft glow
-  const tubeGeo3 = new THREE.TubeGeometry(curve, TUBE_SEG, 2.8, 8, true);
-  const tubeMat3 = new THREE.MeshBasicMaterial({ color: 0xff3ea5, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false });
-  const tube3 = new THREE.Mesh(tubeGeo3, tubeMat3);
-  tube3.position.y = 0.5;
-  scene.add(tube3);
-
-  // Route shadow on floor
-  const shadowGeo = new THREE.TubeGeometry(curve, TUBE_SEG, 1.0, 6, true);
-  const shadowMat = new THREE.MeshBasicMaterial({ color: 0xff3ea5, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
-  const shadow = new THREE.Mesh(shadowGeo, shadowMat);
-  shadow.position.y = -1.95;
-  shadow.scale.y = 0.01;
-  scene.add(shadow);
-
-  // === Start/finish marker ===
-  const flagPos = points3D[0];
-  const flagGeo = new THREE.CylinderGeometry(0.15, 0.15, 12, 8);
-  const flagMat = new THREE.MeshBasicMaterial({ color: 0xff3ea5 });
-  const flag = new THREE.Mesh(flagGeo, flagMat);
-  flag.position.set(flagPos.x, 6, flagPos.z);
-  scene.add(flag);
-
-  // Glow at start
-  const startGlowMat = new THREE.SpriteMaterial({ color: 0xff3ea5, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
-  const startGlow = new THREE.Sprite(startGlowMat);
-  startGlow.scale.set(15, 15, 1);
-  startGlow.position.set(flagPos.x, 0.5, flagPos.z);
-  scene.add(startGlow);
-
-  // === Waypoints at km markers ===
-  const waypoints = [
-    { t: 0.0, label: '→ CODOS Start' },
-    { t: 0.12, label: '→ Leibnizufer' },
-    { t: 0.28, label: '→ Maschsee Nord' },
-    { t: 0.45, label: '→ Maschsee West' },
-    { t: 0.55, label: '→ Südspitze' },
-    { t: 0.7, label: '→ Maschsee Ost' },
-    { t: 0.85, label: '→ Bult / Südstadt' },
-    { t: 0.97, label: '→ Ziel CODOS' },
-  ];
-  const wpGroup = new THREE.Group();
-  waypoints.forEach(wp => {
-    const pos = curve.getPointAt(wp.t);
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.2, 0.1, 8, 24),
-      new THREE.MeshBasicMaterial({ color: 0xff3ea5, transparent: true, opacity: 0.8 })
-    );
-    ring.position.copy(pos);
-    ring.position.y = 0.5;
-    ring.rotation.x = Math.PI / 2;
-    wpGroup.add(ring);
-    const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(0.4, 12, 12),
-      new THREE.MeshBasicMaterial({ color: 0xffffff })
-    );
-    dot.position.copy(pos);
-    dot.position.y = 0.5;
-    wpGroup.add(dot);
-  });
-  scene.add(wpGroup);
-
-  // === Runner (animated marker traveling the route) ===
-  const runnerGroup = new THREE.Group();
-  const runnerBall = new THREE.Mesh(
-    new THREE.SphereGeometry(0.8, 16, 16),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
-  );
-  runnerGroup.add(runnerBall);
-  // Runner glow
-  const runnerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    color: 0xff3ea5, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending
-  }));
-  runnerGlow.scale.set(8, 8, 1);
-  runnerGroup.add(runnerGlow);
-  scene.add(runnerGroup);
-
-  // Trail particles behind runner — ring buffer (no array allocations per frame)
-  const trailCount = 40;
-  const trailGeo = new THREE.BufferGeometry();
-  const trailPositions = new Float32Array(trailCount * 3);
-  trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
-  const trailMat = new THREE.PointsMaterial({
-    color: 0xff3ea5,
-    size: 0.6,
-    transparent: true,
-    opacity: 0.6,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const trail = new THREE.Points(trailGeo, trailMat);
-  scene.add(trail);
-  // Pre-allocated buffer of past positions (circular)
-  const trailHistoryX = new Float32Array(trailCount);
-  const trailHistoryZ = new Float32Array(trailCount);
-  let trailHead = 0;
-
-  // === Ambient particles in the air ===
-  const ambCount = 300;
-  const ambPos = new Float32Array(ambCount * 3);
-  for (let i = 0; i < ambCount; i++) {
-    ambPos[i*3]   = (Math.random() - 0.5) * 400;
-    ambPos[i*3+1] = Math.random() * 60;
-    ambPos[i*3+2] = (Math.random() - 0.5) * 400;
-  }
-  const ambGeo = new THREE.BufferGeometry();
-  ambGeo.setAttribute('position', new THREE.BufferAttribute(ambPos, 3));
-  const ambMat = new THREE.PointsMaterial({
-    color: 0xff3ea5,
-    size: 0.25,
-    transparent: true,
-    opacity: 0.5,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const amb = new THREE.Points(ambGeo, ambMat);
-  scene.add(amb);
-
-  // === Bounding info ===
-  const box = new THREE.Box3().setFromPoints(points3D);
-  const size = new THREE.Vector3(); box.getSize(size);
-  const center = new THREE.Vector3(); box.getCenter(center);
-  const maxDim = Math.max(size.x, size.z);
-
-  // === Scroll-controlled camera ===
-  let progress = 0;
-  const rpFill = document.getElementById('rpFill');
-  const wpVal = document.getElementById('wpVal');
-
-  ScrollTrigger.create({
-    trigger: '#route',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 0.8,
-    onUpdate: self => {
-      progress = self.progress;
-      rpFill.style.width = (progress * 100) + '%';
-      // Update waypoint label
-      const wp = [...waypoints].reverse().find(w => progress >= w.t) || waypoints[0];
-      wpVal.textContent = wp.label;
-    }
-  });
-
-  function animate() {
-    requestAnimationFrame(animate);
-    // Always render — visibility check was causing the canvas to stay blank in some cases.
-    // The perf cost of always rendering is minimal because the scene is small.
-
-    // Phase 1 (0 → 0.15): top-down overview
-    // Phase 2 (0.15 → 0.85): camera follows along the route
-    // Phase 3 (0.85 → 1): pull back to overview
-
-    let camPos, camLook;
-
-    if (progress < 0.12) {
-      // top-down zoom in
-      const t = progress / 0.12;
-      const startCam = new THREE.Vector3(center.x, maxDim * 1.6, center.z + maxDim * 0.5);
-      const startLook = new THREE.Vector3(center.x, 0, center.z);
-      const targetPos = curve.getPointAt(0).clone(); targetPos.y = 8;
-      const targetLook = curve.getPointAt(0.03).clone(); targetLook.y = 0;
-      const dirOffset = new THREE.Vector3().subVectors(targetLook, targetPos).normalize().multiplyScalar(-12);
-      const camNear = new THREE.Vector3().addVectors(targetPos, dirOffset);
-
-      camPos = new THREE.Vector3().lerpVectors(startCam, camNear, t);
-      camLook = new THREE.Vector3().lerpVectors(startLook, targetLook, t);
-    } else if (progress < 0.88) {
-      // follow the route
-      const t = (progress - 0.12) / 0.76;
-      const ahead = Math.min(t + 0.025, 1);
-      const point = curve.getPointAt(t);
-      const lookPoint = curve.getPointAt(ahead);
-      const direction = new THREE.Vector3().subVectors(lookPoint, point).normalize();
-      camPos = new THREE.Vector3(point.x - direction.x * 10, 6, point.z - direction.z * 10);
-      camLook = new THREE.Vector3(lookPoint.x, 1, lookPoint.z);
-    } else {
-      // pull back to overview
-      const t = (progress - 0.88) / 0.12;
-      const lastPoint = curve.getPointAt(1);
-      const ahead = curve.getPointAt(0.05); // back near start since loop
-      const dir = new THREE.Vector3().subVectors(ahead, lastPoint).normalize();
-      const camNear = new THREE.Vector3(lastPoint.x - dir.x * 10, 6, lastPoint.z - dir.z * 10);
-      const camFar = new THREE.Vector3(center.x, maxDim * 1.4, center.z + maxDim * 0.3);
-      camPos = new THREE.Vector3().lerpVectors(camNear, camFar, t);
-      camLook = new THREE.Vector3().lerpVectors(lastPoint, center, t);
-    }
-
-    camera.position.copy(camPos);
-    camera.lookAt(camLook);
-
-    // Runner position
-    const runnerT = Math.min(Math.max(progress * 1.0, 0), 1);
-    const runnerPos = curve.getPointAt(runnerT);
-    runnerGroup.position.set(runnerPos.x, 1, runnerPos.z);
-
-    // Trail update — ring buffer write, no allocation
-    trailHistoryX[trailHead] = runnerPos.x;
-    trailHistoryZ[trailHead] = runnerPos.z;
-    trailHead = (trailHead + 1) % trailCount;
-    for (let i = 0; i < trailCount; i++) {
-      const idx = (trailHead - 1 - i + trailCount) % trailCount;
-      trailPositions[i*3]   = trailHistoryX[idx];
-      trailPositions[i*3+1] = 0.8 - (i/trailCount) * 0.3;
-      trailPositions[i*3+2] = trailHistoryZ[idx];
-    }
-    trailGeo.attributes.position.needsUpdate = true;
-
-    // Pulse waypoints
-    const time = performance.now() * 0.001;
-    wpGroup.children.forEach((ch, i) => {
-      if (ch.geometry.type === 'TorusGeometry') {
-        ch.scale.setScalar(1 + Math.sin(time * 2 + i) * 0.1);
-      }
-    });
-
-    // Spin start flag glow
-    startGlow.material.opacity = 0.5 + Math.sin(time * 2) * 0.2;
-
-    // Slow grid drift
-    floor.position.x = Math.sin(time * 0.1) * 5;
-
-    // Ambient particles slow drift
-    amb.rotation.y += 0.0003;
-
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  function handleResize() {
-    w = canvas.clientWidth || window.innerWidth;
-    h = canvas.clientHeight || window.innerHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
-  }
-  window.addEventListener('resize', handleResize);
-  // Re-measure once the sticky parent has settled into layout
-  setTimeout(handleResize, 100);
-  setTimeout(handleResize, 500);
-}
 
 /* ============================================
    SIGNUP MODAL
@@ -4286,8 +3431,8 @@ document.addEventListener('keydown', e => {
   // Events — neueste / Highlight zuerst. count = Anzahl Fotos im Ordner.
   var EVENTS = [
     { slug: '2026-06-03-redbull', title: 'Cirqle × Red Bull', chip: 'Cirqle × Red Bull', badge: 'Red Bull', date: '03.06.26', count: 144, rb: true },
-    { slug: '2026-06-07',         title: 'Sunday Run',        chip: '07.06',              badge: '07.06',    date: '07.06.26', count: 28 },
-    { slug: '2026-05-17',         title: 'Sunday Run',        chip: '17.05',              badge: '17.05',    date: '17.05.26', count: 73 }
+    { slug: '2026-06-07',         title: 'cirqle Run Day',        chip: '07.06',              badge: '07.06',    date: '07.06.26', count: 28 },
+    { slug: '2026-05-17',         title: 'cirqle Run Day',        chip: '17.05',              badge: '17.05',    date: '17.05.26', count: 73 }
   ];
   var BASE = 'photos/events/';
   var GRID_PER_EVENT_ALL = 12; // pro Event im "Alle"-View
@@ -4414,6 +3559,155 @@ document.addEventListener('keydown', e => {
 
   renderFilters();
   renderGrid();
+})();
+</script>
+<script>
+/* ============================================================
+   NÄCHSTER RUN — self-updating (Countdown / Stay-tuned)
+   >>> Zum Pflegen NUR dieses NEXT_RUN-Objekt anfassen. <<<
+============================================================ */
+(function () {
+  // ── Wenn der nächste Run feststeht: date auf ISO setzen ──
+  //    z.B. date: '2026-07-13T10:00:00'
+  //    Auf null lassen ODER ein vergangenes Datum => automatisch "Stay tuned".
+  var NEXT_RUN = {
+    date: null,
+    title: 'cirqle Run Day',
+    startLabel: 'Start & Uhrzeit folgen',      // pro Run anpassen (Startpunkt variiert)
+    distance: 'Strecke variiert je nach Run',  // pro Run anpassen
+    voucherText: 'Gratis Filterkaffee bei CODOS für die ersten <strong>100</strong> Angemeldeten',
+    voucherCode: 'CODOS-KAFFEE',
+    voucherWhat: 'Gratis Filterkaffee bei CODOS'
+  };
+
+  // ── Formspree/Getform Endpoint hier eintragen (dann landen die
+  //    Stay-tuned-Anmeldungen in deinem Posteingang). Leer = mailto-Fallback. ──
+  var NOTIFY_ENDPOINT = '';
+  var NOTIFY_MAILTO = 'hello@lecirqle.de';
+
+  var MONTHS = ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  var DAYS = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+  var pad2 = function (n) { return ('0' + n).slice(-2); };
+
+  var grid = document.getElementById('nextRunGrid');
+  var heroNext = document.getElementById('heroNextRun');
+
+  var runDate = NEXT_RUN.date ? new Date(NEXT_RUN.date) : null;
+  var scheduled = runDate && !isNaN(runDate) && runDate.getTime() > Date.now();
+
+  function daysLeft(d) { return Math.ceil((d.getTime() - Date.now()) / 86400000); }
+  function cdParts(d) {
+    var ms = Math.max(0, d.getTime() - Date.now());
+    return {
+      days: Math.floor(ms / 86400000),
+      hrs: Math.floor((ms % 86400000) / 3600000),
+      mins: Math.floor((ms % 3600000) / 60000)
+    };
+  }
+  function longDate(d) { return DAYS[d.getDay()] + ', ' + d.getDate() + '. ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear(); }
+
+  function tickCountdown() {
+    var el = document.getElementById('rc');
+    if (!el || !scheduled) return;
+    var p = cdParts(runDate);
+    el.innerHTML =
+      '<div class="rc-unit"><div class="rc-num">' + p.days + '</div><div class="rc-lbl">Tage</div></div>' +
+      '<div class="rc-unit"><div class="rc-num">' + p.hrs + '</div><div class="rc-lbl">Std</div></div>' +
+      '<div class="rc-unit"><div class="rc-num">' + p.mins + '</div><div class="rc-lbl">Min</div></div>';
+  }
+
+  function renderScheduled() {
+    var d = runDate, day = pad2(d.getDate()), mon = MONTHS[d.getMonth()], dow = DAYS[d.getDay()];
+    grid.classList.add('single');
+    grid.innerHTML =
+      '<div class="event-card">' +
+        '<div class="ec-glow"></div>' +
+        '<div class="event-date-block"><div><div class="event-date">' + day + '</div>' +
+          '<div class="event-day">' + dow + ' · ' + mon + '</div></div>' +
+          '<span class="event-tag">Next Run</span></div>' +
+        '<h3>' + NEXT_RUN.title + '</h3>' +
+        '<div class="run-countdown" id="rc"></div>' +
+        '<div class="event-info">' +
+          '<div class="row"><span class="key">Start</span> ' + NEXT_RUN.startLabel + '</div>' +
+          '<div class="row"><span class="key">Distanz</span> ' + NEXT_RUN.distance + '</div>' +
+        '</div>' +
+        '<div class="event-voucher"><div class="v-ico">☕</div><div class="v-text">' + NEXT_RUN.voucherText + '</div></div>' +
+        '<div class="event-capacity" id="capacityBox"><div class="cap-header">' +
+          '<span class="cap-count"><strong id="capCount">63</strong>/<span id="capMax">100</span> Plätze · Gratis Kaffees</span>' +
+          '<span class="cap-status" id="capStatus">Sichere dir einen</span></div>' +
+          '<div class="cap-bar"><div class="cap-fill" id="capFill" data-target="63"></div></div></div>' +
+        '<button class="event-signup" data-hover>Anmelden <span>→</span></button>' +
+      '</div>';
+    tickCountdown();
+    grid.querySelector('.event-signup').addEventListener('click', function () {
+      if (typeof openSignup === 'function') openSignup(NEXT_RUN.title, longDate(d), NEXT_RUN.voucherCode, NEXT_RUN.voucherWhat);
+    });
+    if (typeof initCapacity === 'function') initCapacity();
+    if (heroNext) heroNext.textContent = 'Next run · ' + dow + ' ' + day + '.' + pad2(d.getMonth() + 1) + ' · ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ' · noch ' + daysLeft(d) + ' Tag' + (daysLeft(d) === 1 ? '' : 'e');
+    setInterval(tickCountdown, 60000);
+  }
+
+  function renderStayTuned() {
+    grid.classList.remove('single');
+    grid.innerHTML =
+      '<div class="event-card" style="text-align:center">' +
+        '<div class="ec-glow"></div>' +
+        '<div class="staytuned">' +
+          '<div class="st-pulse"></div>' +
+          '<div class="st-eyebrow">Termin folgt</div>' +
+          '<h3 class="st-title">Nächster Run wird<br>gerade geplant.</h3>' +
+          '<p class="st-sub">Der nächste cirqle Run Day steht noch nicht fest. Trag dich ein — wir schreiben dir, sobald Datum & Route stehen. Kein Spam, nur Runs.</p>' +
+          '<button class="event-signup" id="notifyBtn" data-hover style="max-width:320px;margin:0 auto">Benachrichtige mich <span>→</span></button>' +
+        '</div>' +
+      '</div>';
+    grid.querySelector('#notifyBtn').addEventListener('click', window.openNotify);
+    if (heroNext) heroNext.textContent = 'Nächster Run: Termin folgt · Stay tuned';
+    var heroCta = document.querySelector('.hero-ctas .btn-primary');
+    if (heroCta) heroCta.innerHTML = 'Bleib informiert <span class="arrow">→</span>';
+  }
+
+  /* ── Notify Modal ── */
+  window.openNotify = function () {
+    document.getElementById('notifyForm').style.display = 'block';
+    document.getElementById('notifyDone').style.display = 'none';
+    document.getElementById('notifyModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+  window.closeNotify = function () {
+    document.getElementById('notifyModal').classList.remove('show');
+    document.body.style.overflow = '';
+  };
+  window.submitNotify = function (e) {
+    e.preventDefault();
+    var data = {
+      name: document.getElementById('notifyName').value,
+      email: document.getElementById('notifyEmail').value,
+      _subject: 'cirqle · Stay-tuned Anmeldung',
+      source: 'lecirqle.de · stay-tuned'
+    };
+    var done = function () {
+      document.getElementById('notifyForm').style.display = 'none';
+      document.getElementById('notifyDone').style.display = 'block';
+    };
+    if (NOTIFY_ENDPOINT) {
+      fetch(NOTIFY_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(done).catch(done);
+    } else {
+      window.location.href = 'mailto:' + NOTIFY_MAILTO +
+        '?subject=' + encodeURIComponent('Stay tuned – nächster Run') +
+        '&body=' + encodeURIComponent('Name: ' + data.name + '\nEmail: ' + data.email + '\n\nBitte benachrichtigt mich zum nächsten cirqle Run.');
+      done();
+    }
+    return false;
+  };
+  var nm = document.getElementById('notifyModal');
+  if (nm) nm.addEventListener('click', function (e) { if (e.target === nm) window.closeNotify(); });
+
+  // ── Init ──
+  if (grid) { if (scheduled) renderScheduled(); else renderStayTuned(); }
 })();
 </script>
 </body>
