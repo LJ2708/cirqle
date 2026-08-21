@@ -104,6 +104,10 @@ nav {
 .stat .num .u { color: var(--pink); }
 .stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--text-mute); text-transform: uppercase; margin-top: 12px; }
 @media (max-width: 860px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+.stats-note { margin-top: 18px; color: var(--text-mute); font-size: 15px; line-height: 1.6; }
+.stats-note strong { color: var(--text); }
+.stats-note a { color: var(--pink); }
+.stats-note a:hover { text-decoration: underline; }
 
 /* SECTION */
 .section { position: relative; z-index: 1; padding: 70px 0; }
@@ -227,11 +231,11 @@ footer { position: relative; z-index: 1; padding: 60px 0 40px; margin-top: 40px;
   <div class="wrap">
     <div class="stats-grid">
       <div class="stat"><div class="num">890<span class="u">+</span></div><div class="lbl">Community</div></div>
-      <div class="stat"><div class="num">50<span class="u">+</span></div><div class="lbl">Ø Läufer:innen / Run</div></div>
+      <div class="stat"><div class="num">300<span class="u">+</span></div><div class="lbl">Läufer:innen pro Run</div></div>
       <div class="stat"><div class="num">200<span class="u">+</span></div><div class="lbl">Fotos &amp; Reels / Event</div></div>
       <div class="stat"><div class="num">20<span class="u">+</span></div><div class="lbl">Runs gelaufen</div></div>
     </div>
-    <!-- HINWEIS: "Ø Läufer:innen / Run" ist ein Platzhalter — echte Zahl eintragen. -->
+    <p class="stats-note">Offline <strong>300+</strong> Menschen bei jedem Run — online eine große, aktive Instagram-Community, besonders stark in Hannover. <a href="https://instagram.com/lecirqle" target="_blank" rel="noopener">@lecirqle</a></p>
   </div>
 </section>
 

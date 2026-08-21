@@ -987,6 +987,18 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   padding: 16vh 32px;
   overflow: hidden;
 }
+/* Vision band (Landing) */
+.vision-home { padding: 30px 32px 10px; position: relative; z-index: 2; }
+.vision-home .vh-inner {
+  max-width: 1000px; margin: 0 auto; text-align: center;
+  border: 1px solid rgba(255,62,165,0.25); border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,62,165,0.09), rgba(255,62,165,0.02));
+  padding: 48px 40px;
+}
+.vision-home .vh-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--pink); text-transform: uppercase; }
+.vision-home h2 { font-size: clamp(30px, 4.6vw, 60px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; margin-top: 16px; }
+.vision-home p { color: var(--text-mute); font-size: clamp(16px, 2vw, 20px); margin: 18px auto 0; max-width: 660px; line-height: 1.6; }
+@media (max-width: 600px) { .vision-home .vh-inner { padding: 32px 22px; } }
 .manifesto-orb {
   position: absolute;
   top: 50%; left: 50%;
@@ -2478,6 +2490,15 @@ body, nav, .event-card, .glass-card, .modal, footer,
       <span class="word pink">Connections</span>
       <span class="word">verbindet.</span>
     </h2>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision-home">
+  <div class="vh-inner">
+    <div class="vh-eyebrow">Die Vision</div>
+    <h2>Von Hannover aus zu <span class="script">dem Run Club</span><br>im deutschsprachigen Raum.</h2>
+    <p>Wir bauen die größte Lauf-Community der DACH-Region. Offline 300+ Menschen bei jedem Run, online eine wachsende Bewegung — jeder Run bringt uns näher.</p>
   </div>
 </section>
 
