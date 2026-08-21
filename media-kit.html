@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cirqle · Media Kit 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04040a; --bg-soft: #0a0a14;
+  --surface: rgba(255,255,255,0.04); --border: rgba(255,255,255,0.09); --border-strong: rgba(255,255,255,0.16);
+  --text: #f5f5f7; --text-mute: #9a9aa8; --text-dim: #5a5a6a;
+  --pink: #ff3ea5; --pink-soft: #ff77c2; --pink-deep: #d4248a; --glow-soft: rgba(255,62,165,0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #16161c; }
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.script { font-family: 'Pacifico', cursive; color: var(--pink); font-weight: 400; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+.eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2.5px; color: var(--pink); text-transform: uppercase; }
+
+/* A4 pages */
+.page {
+  width: 210mm; height: 297mm; position: relative; overflow: hidden;
+  background: var(--bg); color: var(--text);
+  padding: 17mm 16mm;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media screen { .page { margin: 0 auto 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); } }
+.page .glow { position: absolute; border-radius: 50%; background: radial-gradient(circle, var(--glow-soft), transparent 70%); pointer-events: none; }
+
+/* ---------- COVER ---------- */
+.cover { display: flex; flex-direction: column; }
+.cover .glow { top: -140px; right: -120px; width: 460px; height: 460px; }
+.cover-top { display: flex; justify-content: space-between; align-items: center; }
+.cover-logo { font-family: 'Pacifico', cursive; font-size: 40px; color: var(--pink); }
+.cover-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--text-mute); }
+.cover-mid { margin-top: 54px; }
+.cover h1 { font-size: 74px; font-weight: 800; letter-spacing: -0.03em; line-height: 0.98; }
+.cover h1 .script { font-size: 68px; }
+.cover .lead { font-size: 17px; color: var(--text-mute); max-width: 440px; margin-top: 22px; line-height: 1.6; }
+.cover-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 40px; }
+.cover-photos img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 14px; display: block; }
+.cover-foot { margin-top: auto; padding-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+.cover-foot .kv { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-mute); }
+.cover-foot .kv b { color: var(--text); }
+
+/* ---------- CONTENT ---------- */
+.p-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+.p-head .n { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); }
+h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top: 30px; line-height: 1.08; }
+.sec-sub { color: var(--text-mute); font-size: 14px; line-height: 1.65; margin-top: 12px; max-width: 620px; }
+
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 16px; }
+.stat .num { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.stat .num .u { color: var(--pink); }
+.stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.5px; color: var(--text-mute); text-transform: uppercase; margin-top: 10px; line-height: 1.3; }
+.reach-line { margin-top: 16px; font-size: 13px; color: var(--text-mute); line-height: 1.6; }
+.reach-line b { color: var(--text); }
+.reach-line .h { color: var(--pink); }
+
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+.why { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+.why .ico { font-size: 22px; }
+.why h3 { font-size: 15px; font-weight: 700; margin: 10px 0 5px; }
+.why p { font-size: 12.5px; color: var(--text-mute); line-height: 1.55; }
+
+.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 26px; }
+.strip img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; display: block; }
+
+/* Packages */
+.pkgs { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.pkg { border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; gap: 22px; align-items: flex-start; }
+.pkg.featured { border-color: var(--pink); background: linear-gradient(135deg, rgba(255,62,165,0.06), transparent); }
+.pkg .left { width: 190px; flex-shrink: 0; }
+.pkg .tier { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--pink); text-transform: uppercase; }
+.pkg h3 { font-size: 20px; font-weight: 800; margin: 6px 0 4px; }
+.pkg .who { font-size: 12px; color: var(--text-mute); line-height: 1.45; }
+.pkg .price { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 8px; }
+.pkg ul { list-style: none; display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+.pkg li { font-size: 12.5px; color: var(--text); display: flex; gap: 8px; line-height: 1.4; }
+.pkg li .c { color: var(--pink); font-weight: 700; }
+
+.proof { margin-top: 26px; }
+.proof .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--text-dim); text-transform: uppercase; }
+.proof .logos { display: flex; gap: 12px; margin-top: 12px; }
+.proof .logos span { font-family: 'IBM Plex Mono', monospace; font-size: 15px; border: 1px solid var(--border); border-radius: 10px; padding: 10px 22px; }
+
+.contact { margin-top: auto; padding-top: 26px; }
+.contact-card { background: linear-gradient(135deg, var(--pink-deep), var(--pink)); border-radius: 20px; padding: 30px 32px; display: flex; justify-content: space-between; align-items: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.contact-card h3 { color: #fff; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.contact-card p { color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 6px; }
+.contact-card .cinfo { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #fff; line-height: 1.7; }
+
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { background: #fff; }
+  .page { width: 210mm; height: 297mm; margin: 0; box-shadow: none; overflow: hidden; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .noprint { display: none !important; }
+}
+.hint { max-width: 210mm; margin: 16px auto; color: #cfcfd8; font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="hint noprint">Entwurf · Media Kit — zum PDF: Drucken (⌘P) → „Als PDF sichern", Option „Hintergrundgrafiken" aktivieren.</div>
+
+<!-- ===================== PAGE 1 — COVER ===================== -->
+<section class="page cover">
+  <div class="glow"></div>
+  <div class="cover-top">
+    <div class="cover-logo">cirqle</div>
+    <div class="cover-tag">MEDIA KIT · 2026</div>
+  </div>
+
+  <div class="cover-mid">
+    <span class="eyebrow">Partner &amp; Sponsoring</span>
+    <h1>Lauf mit<br>der <span class="script">Community.</span></h1>
+    <p class="lead">cirqle ist der Run Club aus Hannover — eine engagierte, lokale Lauf-Community, die sich jede Woche trifft, gemeinsam läuft und Momente teilt. run. meet. connect.</p>
+  </div>
+
+  <div class="cover-photos">
+    <img src="photos/events/2026-06-03-redbull/large/016.jpg" alt="cirqle Run">
+    <img src="photos/events/2026-05-17/large/030.jpg" alt="cirqle Run">
+    <img src="photos/events/2026-06-07/large/012.jpg" alt="cirqle Run">
+  </div>
+
+  <div class="cover-foot">
+    <div class="kv">Run Club · <b>Hannover</b></div>
+    <div class="kv">cirqle.de · <b>@lecirqle</b></div>
+  </div>
+</section>
+
+<!-- ===================== PAGE 2 — WER WIR SIND ===================== -->
+<section class="page">
+  <div class="glow" style="top:-120px; left:-140px; width:420px; height:420px;"></div>
+  <div class="p-head">
+    <div class="cover-logo" style="font-size:26px;">cirqle</div>
+    <div class="n">01 · Über uns &amp; Reichweite</div>
+  </div>
+
+  <h2 class="sec">Kein Bannerplatz.<br>Echte <span class="script">Verbindung.</span></h2>
+  <p class="sec-sub">Bei cirqle erreichst du Menschen dort, wo sie wirklich präsent sind: live beim Run, in einer Community, die dich nicht wegscrollt. Sponsoring heißt hier, Teil eines Erlebnisses zu werden.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">300<span class="u">+</span></div><div class="lbl">Läufer:innen pro Run</div></div>
+    <div class="stat"><div class="num">890<span class="u">+</span></div><div class="lbl">Community</div></div>
+    <div class="stat"><div class="num">200<span class="u">+</span></div><div class="lbl">Fotos &amp; Reels / Event</div></div>
+    <div class="stat"><div class="num">2</div><div class="lbl">Pace-Gruppen · alle Levels</div></div>
+  </div>
+  <p class="reach-line">Offline <b>300+ Menschen bei jedem Run</b> — online eine große, aktive <span class="h">Instagram-Community</span>, besonders stark in Hannover (@lecirqle).</p>
+
+  <h2 class="sec" style="font-size:24px; margin-top:34px;">Was Marken bei uns bekommen</h2>
+  <div class="why-grid">
+    <div class="why"><div class="ico">🎯</div><h3>Engagierte, lokale Zielgruppe</h3><p>Eine junge, aktive Community in Hannover, die dir jede Woche persönlich begegnet.</p></div>
+    <div class="why"><div class="ico">⚡</div><h3>Aktivierung mit Wirkung</h3><p>Sampling, Booth oder eigene Aktion — direkt beim Run, wo deine Marke erlebt wird.</p></div>
+    <div class="why"><div class="ico">📸</div><h3>Content, der bleibt</h3><p>Professionelle Fotos &amp; Reels von jedem Event — deine Marke authentisch in Szene gesetzt.</p></div>
+    <div class="why"><div class="ico">💗</div><h3>Direkter Draht zur Community</h3><p>Voucher &amp; Angebote landen direkt bei unseren Membern — über die cirqle-App.</p></div>
+  </div>
+
+  <div class="strip">
+    <img src="photos/events/2026-06-03-redbull/large/044.jpg" alt="cirqle">
+    <img src="photos/events/2026-05-17/large/012.jpg" alt="cirqle">
+    <img src="photos/events/2026-06-07/large/005.jpg" alt="cirqle">
+    <img src="photos/events/2026-06-03-redbull/large/100.jpg" alt="cirqle">
+  </div>
+</section>
+
+<!-- ===================== PAGE 3 — PAKETE & KONTAKT ===================== -->
+<section class="page" style="display:flex; flex-direction:column;">
+  <div class="glow" style="bottom:-160px; right:-120px; width:440px; height:440px;"></div>
+  <div class="p-head">
+    <div class="cover-logo" style="font-size:26px;">cirqle</div>
+    <div class="n">02 · Sponsoring-Pakete</div>
+  </div>
+
+  <h2 class="sec">Such dir aus, wie<br>wir <span class="script">zusammenarbeiten.</span></h2>
+  <p class="sec-sub">Die Pakete sind der Startpunkt, nicht das Limit. Preise auf Anfrage — Produkt- &amp; Sachleistungen möglich.</p>
+
+  <div class="pkgs">
+    <div class="pkg">
+      <div class="left">
+        <div class="tier">Community Partner</div>
+        <h3>Für lokale Spots</h3>
+        <div class="who">Cafés, Shops &amp; Marken, die die Community unterstützen.</div>
+        <div class="price">Auf Anfrage · Produkt-Deal möglich</div>
+      </div>
+      <ul>
+        <li><span class="c">✓</span> Logo auf der Partner-Seite</li>
+        <li><span class="c">✓</span> Angebot / Voucher für cirqle-Member (App)</li>
+        <li><span class="c">✓</span> Erwähnung im Run-Recap auf Instagram</li>
+      </ul>
+    </div>
+
+    <div class="pkg featured">
+      <div class="left">
+        <div class="tier">Run Partner · beliebt</div>
+        <h3>Für Aktivierung</h3>
+        <div class="who">Marken, die vor Ort präsent sein wollen.</div>
+        <div class="price">Auf Anfrage</div>
+      </div>
+      <ul>
+        <li><span class="c">✓</span> Alles aus Community Partner</li>
+        <li><span class="c">✓</span> Branding &amp; Sampling direkt beim Run</li>
+        <li><span class="c">✓</span> Dedizierter Instagram-Post + Story-Serie</li>
+        <li><span class="c">✓</span> Logo auf dem Foto- &amp; Reel-Content</li>
+        <li><span class="c">✓</span> Nennung als „presented by" beim Run</li>
+      </ul>
+    </div>
+
+    <div class="pkg">
+      <div class="left">
+        <div class="tier">Title Partner · exklusiv</div>
+        <h3>Presenting</h3>
+        <div class="who">Volle Sichtbarkeit, pro Saison.</div>
+        <div class="price">Auf Anfrage</div>
+      </div>
+      <ul>
+        <li><span class="c">✓</span> Alles aus Run Partner</li>
+        <li><span class="c">✓</span> „cirqle × deine Marke" Co-Branding</li>
+        <li><span class="c">✓</span> Logo auf cirqle-Merch &amp; Shirts</li>
+        <li><span class="c">✓</span> Kategorie-Exklusivität &amp; Custom-Aktivierung</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="proof">
+    <div class="lbl">Schon mit uns aktiviert</div>
+    <div class="logos"><span>Red Bull</span><span>Bestia</span><span>CODOS</span></div>
+  </div>
+
+  <div class="contact">
+    <div class="contact-card">
+      <div>
+        <h3>Lass uns reden.</h3>
+        <p>Erzähl uns von deiner Marke — wir melden uns mit einem passenden Vorschlag.</p>
+      </div>
+      <div class="cinfo">
+        partner@lecirqle.de<br>
+        @lecirqle<br>
+        cirqle.de/partners
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
