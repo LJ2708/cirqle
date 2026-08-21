@@ -89,11 +89,27 @@ h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top:
 .proof .logos { display: flex; gap: 12px; margin-top: 12px; }
 .proof .logos span { font-family: 'IBM Plex Mono', monospace; font-size: 15px; border: 1px solid var(--border); border-radius: 10px; padding: 10px 22px; }
 
-.contact { margin-top: auto; padding-top: 26px; }
-.contact-card { background: linear-gradient(135deg, var(--pink-deep), var(--pink)); border-radius: 20px; padding: 30px 32px; display: flex; justify-content: space-between; align-items: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.contact-card h3 { color: #fff; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-.contact-card p { color: rgba(255,255,255,0.9); font-size: 13px; margin-top: 6px; }
-.contact-card .cinfo { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #fff; line-height: 1.7; }
+/* Reichweite columns */
+.reach-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 26px; }
+.rc { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; }
+.rc-h { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--pink); text-transform: uppercase; margin-bottom: 12px; }
+.rc ul { list-style: none; }
+.rc li { font-size: 13.5px; color: var(--text-mute); display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.rc li:last-child { border-bottom: none; padding-bottom: 0; }
+.rc li b { color: var(--text); font-weight: 700; font-size: 15px; }
+.rc li b.ph { color: var(--pink); border-bottom: 1px dashed rgba(255,62,165,0.55); }
+
+/* Bottom row: QR + contact */
+.bottom-row { display: grid; grid-template-columns: 250px 1fr; gap: 14px; margin-top: auto; padding-top: 24px; }
+.qr-card { background: #fff; border-radius: 20px; padding: 18px; display: flex; gap: 14px; align-items: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.qr-card .qr { width: 104px; height: 104px; display: block; flex-shrink: 0; }
+.qr-card .qr-scan { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: var(--pink-deep); text-transform: uppercase; }
+.qr-card .qr-h { font-size: 19px; font-weight: 800; color: #0d0d0d; margin: 3px 0 5px; }
+.qr-card .qr-s { font-size: 11.5px; color: #555; line-height: 1.4; }
+.contact-card { background: linear-gradient(135deg, var(--pink-deep), var(--pink)); border-radius: 20px; padding: 24px 26px; display: flex; justify-content: space-between; align-items: center; height: 100%; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.contact-card h3 { color: #fff; font-size: 23px; font-weight: 800; letter-spacing: -0.02em; }
+.contact-card p { color: rgba(255,255,255,0.9); font-size: 12.5px; margin-top: 6px; max-width: 230px; line-height: 1.5; }
+.contact-card .cinfo { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #fff; line-height: 1.7; flex-shrink: 0; }
 
 @page { size: A4; margin: 0; }
 @media print {
@@ -107,7 +123,7 @@ h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top:
 </head>
 <body>
 
-<div class="hint noprint">Entwurf · Media Kit — zum PDF: Drucken (⌘P) → „Als PDF sichern", Option „Hintergrundgrafiken" aktivieren.</div>
+<div class="hint noprint">Entwurf · Media Kit — Instagram-Zahlen (pink „XX") noch eintragen. Zum PDF: Drucken (⌘P) → „Als PDF sichern", Option „Hintergrundgrafiken" aktivieren.</div>
 
 <!-- ===================== PAGE 1 — COVER ===================== -->
 <section class="page cover">
@@ -120,7 +136,7 @@ h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top:
   <div class="cover-mid">
     <span class="eyebrow">Partner &amp; Sponsoring</span>
     <h1>Lauf mit<br>der <span class="script">Community.</span></h1>
-    <p class="lead">cirqle ist der Run Club aus Hannover — eine engagierte, lokale Lauf-Community, die sich jede Woche trifft, gemeinsam läuft und Momente teilt. run. meet. connect.</p>
+    <p class="lead">cirqle ist der Run Club aus Hannover — eine engagierte, lokale Lauf-Community. Kein wöchentlicher Lauftreff: jeder Run ist ein Event. run. meet. connect.</p>
   </div>
 
   <div class="cover-photos">
@@ -140,26 +156,17 @@ h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top:
   <div class="glow" style="top:-120px; left:-140px; width:420px; height:420px;"></div>
   <div class="p-head">
     <div class="cover-logo" style="font-size:26px;">cirqle</div>
-    <div class="n">01 · Über uns &amp; Reichweite</div>
+    <div class="n">01 · Was wir machen</div>
   </div>
 
-  <h2 class="sec">Kein Bannerplatz.<br>Echte <span class="script">Verbindung.</span></h2>
-  <p class="sec-sub">Bei cirqle erreichst du Menschen dort, wo sie wirklich präsent sind: live beim Run, in einer Community, die dich nicht wegscrollt. Sponsoring heißt hier, Teil eines Erlebnisses zu werden.</p>
+  <h2 class="sec">Kein Lauftreff.<br>Ein <span class="script">Event.</span></h2>
+  <p class="sec-sub">cirqle läuft nicht jede Woche — und genau das ist der Punkt. Jeder Run ist ein Event, auf das die Community hinfiebert: volle Aufmerksamkeit, echte Energie, keine Routine.</p>
 
-  <div class="stat-row">
-    <div class="stat"><div class="num">300<span class="u">+</span></div><div class="lbl">Läufer:innen pro Run</div></div>
-    <div class="stat"><div class="num">890<span class="u">+</span></div><div class="lbl">Community</div></div>
-    <div class="stat"><div class="num">200<span class="u">+</span></div><div class="lbl">Fotos &amp; Reels / Event</div></div>
-    <div class="stat"><div class="num">2</div><div class="lbl">Pace-Gruppen · alle Levels</div></div>
-  </div>
-  <p class="reach-line">Offline <b>300+ Menschen bei jedem Run</b> — online eine große, aktive <span class="h">Instagram-Community</span>, besonders stark in Hannover (@lecirqle).</p>
-
-  <h2 class="sec" style="font-size:24px; margin-top:34px;">Was Marken bei uns bekommen</h2>
   <div class="why-grid">
-    <div class="why"><div class="ico">🎯</div><h3>Engagierte, lokale Zielgruppe</h3><p>Eine junge, aktive Community in Hannover, die dir jede Woche persönlich begegnet.</p></div>
-    <div class="why"><div class="ico">⚡</div><h3>Aktivierung mit Wirkung</h3><p>Sampling, Booth oder eigene Aktion — direkt beim Run, wo deine Marke erlebt wird.</p></div>
-    <div class="why"><div class="ico">📸</div><h3>Content, der bleibt</h3><p>Professionelle Fotos &amp; Reels von jedem Event — deine Marke authentisch in Szene gesetzt.</p></div>
-    <div class="why"><div class="ico">💗</div><h3>Direkter Draht zur Community</h3><p>Voucher &amp; Angebote landen direkt bei unseren Membern — über die cirqle-App.</p></div>
+    <div class="why"><div class="ico">✦</div><h3>Der cirqle Run — als Event</h3><p>Unregelmäßig, dafür jedes Mal ein Happening. Wechselnde Strecken, zwei Pace-Gruppen (6:00 &amp; 7:00 min/km), 300+ Menschen pro Run.</p></div>
+    <div class="why"><div class="ico">⚡</div><h3>Aktivierungen &amp; Kollabs</h3><p>Marken erleben live vor Ort: Sampling, Booth, eigene Aktionen. Zuletzt mit Red Bull, Bestia &amp; CODOS.</p></div>
+    <div class="why"><div class="ico">📸</div><h3>Content-Produktion</h3><p>Professionelle Fotos &amp; Reels von jedem Event — 200+ Assets, die die Energie der Crew einfangen.</p></div>
+    <div class="why"><div class="ico">💗</div><h3>Community &amp; Perks</h3><p>Voucher &amp; Angebote direkt in der cirqle-App — lokale Partner, echte Einlösungen, echte Bindung.</p></div>
   </div>
 
   <div class="strip">
@@ -175,73 +182,49 @@ h2.sec { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-top:
   <div class="glow" style="bottom:-160px; right:-120px; width:440px; height:440px;"></div>
   <div class="p-head">
     <div class="cover-logo" style="font-size:26px;">cirqle</div>
-    <div class="n">02 · Sponsoring-Pakete</div>
+    <div class="n">02 · Reichweite &amp; Social</div>
   </div>
 
-  <h2 class="sec">Such dir aus, wie<br>wir <span class="script">zusammenarbeiten.</span></h2>
-  <p class="sec-sub">Die Pakete sind der Startpunkt, nicht das Limit. Preise auf Anfrage — Produkt- &amp; Sachleistungen möglich.</p>
+  <h2 class="sec">Was wir <span class="script">erreichen.</span></h2>
+  <p class="sec-sub">Offline füllen wir bei jedem Event die Straße — online multiplizieren wir jeden Run über Instagram. Marken profitieren doppelt: live vor Ort und in der Reichweite danach.</p>
 
-  <div class="pkgs">
-    <div class="pkg">
-      <div class="left">
-        <div class="tier">Community Partner</div>
-        <h3>Für lokale Spots</h3>
-        <div class="who">Cafés, Shops &amp; Marken, die die Community unterstützen.</div>
-        <div class="price">Auf Anfrage · Produkt-Deal möglich</div>
-      </div>
+  <div class="reach-cols">
+    <div class="rc">
+      <div class="rc-h">Offline · beim Event</div>
       <ul>
-        <li><span class="c">✓</span> Logo auf der Partner-Seite</li>
-        <li><span class="c">✓</span> Angebot / Voucher für cirqle-Member (App)</li>
-        <li><span class="c">✓</span> Erwähnung im Run-Recap auf Instagram</li>
+        <li>Menschen pro Run <b>300+</b></li>
+        <li>Community <b>890+</b></li>
+        <li>Events gelaufen <b>20+</b></li>
+        <li>Pace-Gruppen <b>2</b></li>
       </ul>
     </div>
-
-    <div class="pkg featured">
-      <div class="left">
-        <div class="tier">Run Partner · beliebt</div>
-        <h3>Für Aktivierung</h3>
-        <div class="who">Marken, die vor Ort präsent sein wollen.</div>
-        <div class="price">Auf Anfrage</div>
-      </div>
+    <div class="rc">
+      <div class="rc-h">Online · Instagram @lecirqle</div>
       <ul>
-        <li><span class="c">✓</span> Alles aus Community Partner</li>
-        <li><span class="c">✓</span> Branding &amp; Sampling direkt beim Run</li>
-        <li><span class="c">✓</span> Dedizierter Instagram-Post + Story-Serie</li>
-        <li><span class="c">✓</span> Logo auf dem Foto- &amp; Reel-Content</li>
-        <li><span class="c">✓</span> Nennung als „presented by" beim Run</li>
-      </ul>
-    </div>
-
-    <div class="pkg">
-      <div class="left">
-        <div class="tier">Title Partner · exklusiv</div>
-        <h3>Presenting</h3>
-        <div class="who">Volle Sichtbarkeit, pro Saison.</div>
-        <div class="price">Auf Anfrage</div>
-      </div>
-      <ul>
-        <li><span class="c">✓</span> Alles aus Run Partner</li>
-        <li><span class="c">✓</span> „cirqle × deine Marke" Co-Branding</li>
-        <li><span class="c">✓</span> Logo auf cirqle-Merch &amp; Shirts</li>
-        <li><span class="c">✓</span> Kategorie-Exklusivität &amp; Custom-Aktivierung</li>
+        <li>Follower <b class="ph">XX</b></li>
+        <li>Reichweite / Monat <b class="ph">XX</b></li>
+        <li>Ø Engagement <b class="ph">XX %</b></li>
+        <li>Content / Event <b>200+</b></li>
       </ul>
     </div>
   </div>
 
-  <div class="proof">
-    <div class="lbl">Schon mit uns aktiviert</div>
-    <div class="logos"><span>Red Bull</span><span>Bestia</span><span>CODOS</span></div>
-  </div>
-
-  <div class="contact">
+  <div class="bottom-row">
+    <div class="qr-card">
+      <img class="qr" src="data:image/png;base64,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" alt="Instagram QR @lecirqle">
+      <div>
+        <div class="qr-scan">Scan mich</div>
+        <div class="qr-h">@lecirqle</div>
+        <div class="qr-s">Sieh selbst, wie wir Reichweite machen.</div>
+      </div>
+    </div>
     <div class="contact-card">
       <div>
         <h3>Lass uns reden.</h3>
-        <p>Erzähl uns von deiner Marke — wir melden uns mit einem passenden Vorschlag.</p>
+        <p>Erzähl uns von deiner Marke — wir finden das passende Format.</p>
       </div>
       <div class="cinfo">
         partner@lecirqle.de<br>
-        @lecirqle<br>
         cirqle.de/partners
       </div>
     </div>
